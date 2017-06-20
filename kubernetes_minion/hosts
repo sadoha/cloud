@@ -1,0 +1,5 @@
+[minions]
+
+centos-minion-1 ansible_connection=ssh ansible_host=192.168.0.11 ansible_user=root
+centos-minion-2 ansible_connection=ssh ansible_host=192.168.0.12 ansible_user=root
+centos-minion-3 ansible_connection=ssh ansible_host=192.168.0.13 ansible_user=root

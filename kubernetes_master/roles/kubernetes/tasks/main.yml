@@ -1,0 +1,39 @@
+---
+- name: Copy the virt7-docker-common-releas repository definition
+  copy: src=virt7-docker-common-release.repo dest=/etc/yum.repos.d/virt7-docker-common-release.repo
+
+- name: Install the latest version of kubernetes, etcd, flannel from the virt7-docker-common-release repo
+  yum: name={{ item }} enablerepo=virt7-docker-common-release state=present
+  with_items:
+    - kubernetes
+    - etcd
+    - flannel
+
+- name: Copy /etc/kubernetes/config configuration 
+  copy: src=config dest=/etc/kubernetes/config
+
+- name: Copy /etc/etcd/etcd.conf configuration 
+  copy: src=etcd.conf dest=/etc/etcd/etcd.conf
+
+- name: Copy /etc/kubernetes/apiserver configuration 
+  copy: src=apiserver dest=/etc/kubernetes/apiserver
+
+- name: Make sure if a service etcd is running
+  systemd: state=started name=etcd 
+
+- name: Copy etcd.sh file
+  copy: src=etcd.sh dest=/tmp/etcd.sh mode=0755
+
+- name: Execute the command in remote shell
+  script: etcd.sh
+  args:
+    chdir: /tmp/
+
+- name: Make sure if services (etcd, kube-apiserver, kube-controller-manager, kube-scheduler, flanneld) are running
+  systemd: state=restarted name={{ item }} daemon_reload=yes enabled=yes
+  with_items:
+    - etcd
+    - kube-apiserver
+    - kube-controller-manager
+    - kube-scheduler
+    - flanneld

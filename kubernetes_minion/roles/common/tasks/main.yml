@@ -1,0 +1,25 @@
+---
+- name: Install libselinux-python
+  yum: name=libselinux-python state=present
+
+- name: Reload ansible_facts
+  setup:
+
+- name: Disable firewalld
+  service: name=firewalld state=stopped enabled=no  
+
+- name: Disable SELinux
+  selinux: state=disabled
+
+- name: Install mc, vim, wget
+  yum: name={{ item }} state=present
+  with_items:
+    - mc
+    - vim
+    - wget
+
+- name: Copy the hosts file
+  copy: src=hosts dest=/etc/hosts
+
+- name: Ensure hostname set
+  hostname: name={{ inventory_hostname }}

@@ -1,0 +1,8 @@
+---
+- name: Configuration kubernetes minions.
+  hosts: master
+  remote_user: root
+
+  roles:
+#    - common
+    - kubernetes

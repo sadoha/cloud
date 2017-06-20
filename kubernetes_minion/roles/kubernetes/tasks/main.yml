@@ -1,0 +1,30 @@
+---
+- name: Copy the virt7-docker-common-releas repository definition
+  copy: src=virt7-docker-common-release.repo dest=/etc/yum.repos.d/virt7-docker-common-release.repo
+
+- name: Install the latest version of kubernetes, etcd, flannel from the virt7-docker-common-release repo
+  yum: name={{ item }} enablerepo=virt7-docker-common-release state=present
+  with_items:
+    - kubernetes
+    - etcd
+    - flannel
+
+- name: Copy kubelet configuration 
+  copy: src=kubelet dest=/etc/kubernetes/kubelet
+
+- name: Add a string to /etc/kubernetes/kubelet
+  lineinfile: dest=/etc/kubernetes/kubelet
+    regexp='^'
+    line=KUBELET_HOSTNAME="--hostname-override={{inventory_hostname}}"
+    state=present
+
+- name: Copy flanneld configuration 
+  copy: src=flanneld dest=/etc/sysconfig/flanneld
+
+- name: Make sure if services are running
+  systemd: state=restarted name={{ item }} daemon_reload=yes enabled=yes
+  with_items:
+    - kube-proxy
+    - kubelet
+    - flanneld
+    - docker
