@@ -1,3 +1,21 @@
 ---
-- name: restart iptables
-  service: name=iptables state=restarted
+
+- name: restart etcd
+  systemd: state=restarted name=etcd 
+
+- name: restart flanneld
+  systemd: state=restarted name=flanneld
+
+- name: restart kube-apiserver
+  systemd: state=restarted name=kube-apiserver 
+
+- name: restart kube-controller-manager
+  systemd: state=restarted name=kube-controller-manager
+ 
+- name: restart kube-scheduler
+  systemd: state=restarted name=kube-scheduler
+
+- name: execute shell
+  script: etcd.sh
+  args:
+    chdir: /tmp/

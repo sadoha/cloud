@@ -7,4 +7,4 @@ if [ "`cat /tmp/etcdctl-tmp.log | grep Error:`" != "" ] ; then
   etcdctl mk /kube-centos/network/config "{ \"Network\": \"172.30.0.0/16\", \"SubnetLen\": 24, \"Backend\": { \"Type\": \"vxlan\" } }"
 fi
 
-#rm /tmp/etcdctl-tmp.log 
+rm /tmp/etcdctl-tmp.log
