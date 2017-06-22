@@ -6,3 +6,4 @@
 192.168.0.12    centos-minion-2
 192.168.0.13    centos-minion-3
 192.168.0.14    centos-nfs-server
+192.168.0.15    centos-postgreSQL-server
