@@ -17,12 +17,14 @@
     regexp='^'
     line=KUBELET_HOSTNAME="--hostname-override={{inventory_hostname}}"
     state=present
+  notify: restart kubelet
 
 - name: Copy flanneld configuration 
   copy: src=flanneld dest=/etc/sysconfig/flanneld
+  notify: restart flanneld
 
 - name: Make sure if services are running
-  systemd: state=restarted name={{ item }} daemon_reload=yes enabled=yes
+  systemd: state=started name={{ item }} enabled=yes
   with_items:
     - kube-proxy
     - kubelet
