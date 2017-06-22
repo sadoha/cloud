@@ -2,9 +2,6 @@
 - name: Install libselinux-python
   yum: name=libselinux-python state=present
 
-- name: Reload ansible_facts
-  setup:
-
 - name: Disable firewalld
   service: name=firewalld state=stopped enabled=no  
 

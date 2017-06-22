@@ -12,9 +12,10 @@
 
 - name: Copy /etc/exports configuration 
   copy: src=exports dest=/etc/exports
+  notify: restart nfs
 
 - name: Make sure if services are running
-  systemd: state=restarted name={{ item }} daemon_reload=yes enabled=yes
+  systemd: state=started name={{ item }} enabled=yes
   with_items:
     - rpcbind
     - nfs-server

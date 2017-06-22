@@ -1,1 +1,9 @@
 ---
+
+- name: restart nfs
+  systemd: state=restarted name={{ item }} enabled=yes
+  with_items:
+    - rpcbind
+    - nfs-server
+    - nfs-lock
+    - nfs-idmap
