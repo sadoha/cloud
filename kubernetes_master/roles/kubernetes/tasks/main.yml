@@ -18,6 +18,9 @@
 - name: Copy /etc/kubernetes/apiserver configuration 
   copy: src=apiserver dest=/etc/kubernetes/apiserver
 
+- name: Copy /etc/sysconfig/flanneld configuration 
+  copy: src=flanneld dest=/etc/sysconfig/flanneld 
+
 - name: Make sure if a service etcd is running
   systemd: state=started name=etcd 
 
