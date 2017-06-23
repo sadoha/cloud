@@ -9,14 +9,10 @@
     - etcd
     - flannel
 
-- name: Copy kubelet configuration 
-  copy: src=kubelet dest=/etc/kubernetes/kubelet
-
-- name: Add a string to /etc/kubernetes/kubelet
-  lineinfile: dest=/etc/kubernetes/kubelet
-    regexp='^'
-    line=KUBELET_HOSTNAME="--hostname-override={{inventory_hostname}}"
-    state=present
+- name: Copy kubelet configuration
+  template: 
+        src=kubelet
+        dest=/etc/kubernetes/kubelet
   notify: restart kubelet
 
 - name: Copy flanneld configuration 
