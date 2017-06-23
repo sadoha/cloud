@@ -4,6 +4,6 @@
   remote_user: root
 
   roles:
-    - common
+#    - common
     - kubernetes
-    - nfs
+#    - nfs

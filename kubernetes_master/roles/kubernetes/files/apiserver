@@ -9,7 +9,8 @@
 KUBE_API_ADDRESS="--address=0.0.0.0"
 
 # The port on the local server to listen on.
-KUBE_API_PORT="--port=8080"
+#KUBE_API_PORT="--port=8080"
+KUBE_API_PORT="--port=80"
 
 # Port minions listen on
 KUBELET_PORT="--kubelet-port=10250"

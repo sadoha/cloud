@@ -37,3 +37,6 @@
     - kube-controller-manager
     - kube-scheduler
     - flanneld
+
+- name: Set default cluster
+  command: kubectl config set-cluster default-cluster --server=http://centos-master:80
