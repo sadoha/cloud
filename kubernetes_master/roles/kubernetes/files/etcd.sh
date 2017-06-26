@@ -1,10 +1,24 @@
 #!/bin/sh
+#
+# Script for setting and checking network overlay configuration on master.
+#
+##########################################################################
 
-etcdctl ls /kube-centos/network 2&> /tmp/etcdctl-tmp.log 
+# Getting network status. 
+statusNetwork="`etcdctl ls /kube-centos/network`"
 
-if [ "`cat /tmp/etcdctl-tmp.log | grep Error:`" != "" ] ; then 
-   etcdctl mkdir /kube-centos/network
-   etcdctl mk /kube-centos/network/config "{ \"Network\"":" \"172.30.0.0/16\", \"SubnetLen\"":" 24, \"Backend\"":" { \"Type\"":" \"vxlan\" } }"
-fi
+# Setting network overlay configuration.
+function networkConfig {
+  etcdctl mkdir /kube-centos/networ
+  etcdctl mk /kube-centos/network/config "{ \"Network\": \"172.30.0.0/16\", \"SubnetLen\": 24, \"Backend\": { \"Type\": \"vxlan\" } }"
+}
 
-rm /tmp/etcdctl-tmp.log
+# Checking network overlay configuration.
+if [ "`echo ${statusNetwork} | grep subnets`" = ""  ] ; then
+  networkConfig
+fi  
+
+if [ "`echo ${statusNetwork} | grep config`" = ""  ] ; then
+  networkConfig
+fi  
+
