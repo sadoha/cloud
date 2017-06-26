@@ -14,8 +14,3 @@
  
 - name: restart kube-scheduler
   systemd: state=restarted name=kube-scheduler
-
-- name: execute shell
-  script: etcd.sh
-  args:
-    chdir: /tmp/

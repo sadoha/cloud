@@ -29,11 +29,16 @@
   template:
         src=flanneld
         dest=/etc/sysconfig/flanneld
-  notify: restart restart flanneld
+  notify: restart flanneld
 
 - name: Copy etcd.sh file and execute shell script.
   copy: src=etcd.sh dest=/tmp/etcd.sh mode=0755
-  notify: execute shell
+
+# Temporary solution for setting network overlay configuration.
+- name: Set network overlay configuration
+  script: etcd.sh
+  args:
+    chdir: /tmp
 
 - name: Make sure if services (etcd, kube-apiserver, kube-controller-manager, kube-scheduler, flanneld) are running
   systemd: state=started name={{ item }} enabled=yes
@@ -44,8 +49,12 @@
     - kube-scheduler
     - flanneld
 
+# There are two temporary configuration for connection to the kubectl on local server. 
 - name: Set default cluster
   command: kubectl config set-cluster default-cluster --server=http://{{kube_master}}:{{api_servers_port}}
 
-- name: Set default cluster
-  command: kubectl config set-context default-context && kubectl config use-context default-context
+- name: Set default connection to kubectl
+  command: kubectl config set-context default-context --cluster=default-cluster --user=default-admin 
+
+- name: Set default connection to kubectl
+  command: kubectl config use-context default-context
