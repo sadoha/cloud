@@ -36,7 +36,7 @@
 
 # Temporary solution for setting network overlay configuration.
 - name: Set network overlay configuration
-  script: etcd.sh
+  command: /bin/sh ./etcd.sh
   args:
     chdir: /tmp
 
