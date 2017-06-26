@@ -20,4 +20,4 @@ KUBE_ALLOW_PRIV="--allow-privileged=false"
 
 # How the controller-manager, scheduler, and proxy find the apiserver
 #KUBE_MASTER="--master=http://centos-master:8080"
-KUBE_MASTER="--master=http://centos-master:80"
+KUBE_MASTER="--master=http://{{kube_master}}:{{api_servers_port}}"

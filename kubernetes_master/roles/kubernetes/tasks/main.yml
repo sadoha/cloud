@@ -9,21 +9,27 @@
     - etcd
     - flannel
 
-- name: Copy /etc/kubernetes/config configuration 
-  copy: src=config dest=/etc/kubernetes/config
-  notify: restart kube-controller-manager 
-
-- name: Copy /etc/etcd/etcd.conf configuration 
+- name: Copy /etc/etcd/etcd.conf configuration
   copy: src=etcd.conf dest=/etc/etcd/etcd.conf
   notify: restart etcd
 
-- name: Copy /etc/kubernetes/apiserver configuration 
-  copy: src=apiserver dest=/etc/kubernetes/apiserver
+- name: Copy /etc/kubernetes/config configuration
+  template:
+        src=config
+        dest=/etc/kubernetes/config
+  notify: restart kube-controller-manager
+
+- name: Copy /etc/kubernetes/apiserver configuration
+  template:
+        src=apiserver
+        dest=/etc/kubernetes/apiserver
   notify: restart kube-apiserver
 
-- name: Copy /etc/sysconfig/flanneld configuration 
-  copy: src=flanneld dest=/etc/sysconfig/flanneld
-  notify: restart flanneld 
+- name: Copy /etc/sysconfig/flanneld configuration
+  template:
+        src=flanneld
+        dest=/etc/sysconfig/flanneld
+  notify: restart restart flanneld
 
 - name: Copy etcd.sh file and execute shell script.
   copy: src=etcd.sh dest=/tmp/etcd.sh mode=0755
@@ -39,4 +45,4 @@
     - flanneld
 
 - name: Set default cluster
-  command: kubectl config set-cluster default-cluster --server=http://centos-master:80
+  command: kubectl config set-cluster default-cluster --server=http://{{kube_master}}:{{api_servers_port}}
