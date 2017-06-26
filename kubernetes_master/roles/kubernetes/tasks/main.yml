@@ -33,6 +33,7 @@
 
 - name: Copy etcd.sh file and execute shell script.
   copy: src=etcd.sh dest=/tmp/etcd.sh mode=0755
+  notify: restart etcd
 
 # Temporary solution for setting network overlay configuration.
 - name: Set network overlay configuration
