@@ -46,3 +46,6 @@
 
 - name: Set default cluster
   command: kubectl config set-cluster default-cluster --server=http://{{kube_master}}:{{api_servers_port}}
+
+- name: Set default cluster
+  command: kubectl config set-context default-context && kubectl config use-context default-context
