@@ -1,4 +1,4 @@
 
 ---
-api_servers_port: 80
-kube_master: centos-master
+api_servers_port: 8080
+kube_master: kube-master

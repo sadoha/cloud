@@ -1,11 +1,8 @@
 ---
-- name: Copy the virt7-docker-common-releas repository definition
-  copy: src=virt7-docker-common-release.repo dest=/etc/yum.repos.d/virt7-docker-common-release.repo
-
-- name: Install the latest version of kubernetes, etcd, flannel from the virt7-docker-common-release repo
-  yum: name={{ item }} enablerepo=virt7-docker-common-release state=present
+- name: Install the latest version of etcd, kubernetes-master, flannel 
+  yum: name={{ item }} state=present
   with_items:
-    - kubernetes
+    - kubernetes-master
     - etcd
     - flannel
 
@@ -35,11 +32,10 @@
   systemd: state=started name=etcd enabled=yes
 
 - name: Copy etcd.sh file and execute shell script.
-  copy: src=etcd.sh dest=/tmp/etcd.sh mode=0755
+  copy: src=flannel-config.json dest=/tmp/flannel-config.json mode=0755
 
-# Temporary solution for setting network overlay configuration.
 - name: Set network overlay configuration
-  command: /bin/sh ./etcd.sh
+  command: /usr/bin/etcdctl set coreos.com/network/config < flannel-config.json
   args:
     chdir: /tmp
 
@@ -50,13 +46,3 @@
     - kube-controller-manager
     - kube-scheduler
     - flanneld
-
-# There are two temporary configuration for connection to the kubectl on local server. 
-- name: Set default cluster
-  command: kubectl config set-cluster default-cluster --server=http://{{kube_master}}:{{api_servers_port}}
-
-- name: Set default connection to kubectl
-  command: kubectl config set-context default-context --cluster=default-cluster --user=default-admin 
-
-- name: Set default connection to kubectl
-  command: kubectl config use-context default-context
