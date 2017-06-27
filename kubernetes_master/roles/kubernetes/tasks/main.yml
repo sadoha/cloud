@@ -31,6 +31,9 @@
         dest=/etc/sysconfig/flanneld
   notify: restart flanneld
 
+- name: Make sure if a services etcd is running
+  systemd: state=started name=etcd enabled=yes
+
 - name: Copy etcd.sh file and execute shell script.
   copy: src=etcd.sh dest=/tmp/etcd.sh mode=0755
 
@@ -40,10 +43,9 @@
   args:
     chdir: /tmp
 
-- name: Make sure if services (etcd, kube-apiserver, kube-controller-manager, kube-scheduler, flanneld) are running
+- name: Make sure if services (kube-apiserver, kube-controller-manager, kube-scheduler, flanneld) are running
   systemd: state=started name={{ item }} enabled=yes
   with_items:
-    - etcd
     - kube-apiserver
     - kube-controller-manager
     - kube-scheduler
