@@ -31,11 +31,11 @@
 - name: Make sure if a services etcd is running
   systemd: state=started name=etcd enabled=yes
 
-- name: Copy etcd.sh file and execute shell script.
-  copy: src=flannel-config.json dest=/tmp/flannel-config.json mode=0755
+- name: Copy flannel-config.json file and execute shell script.
+  copy: src=flannel-config.json dest=/tmp/flannel-config.json mode=0777
 
 - name: Set network overlay configuration
-  command: /usr/bin/etcdctl set coreos.com/network/config < flannel-config.json
+  command: /usr/bin/etcdctl set coreos.com/network/config < ./flannel-config.json
   args:
     chdir: /tmp
 
