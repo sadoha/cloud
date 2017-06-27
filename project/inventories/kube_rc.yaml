@@ -1,0 +1,4 @@
+- name: Deploy kube rc to cluster
+  hosts: localhost
+  roles:
+    - kube_rc

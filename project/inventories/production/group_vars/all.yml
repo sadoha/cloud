@@ -1,0 +1,4 @@
+api_endpoint: centos-master
+url_username: admin
+url_password: pass
+my_custom_label: test
