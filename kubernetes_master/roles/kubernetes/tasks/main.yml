@@ -31,13 +31,14 @@
 - name: Make sure if a services etcd is running
   systemd: state=started name=etcd enabled=yes
 
-- name: Copy flannel-config.json file and execute shell script.
+- name: Copy a network overlay configuration file flannel-config.json
   copy: src=flannel-config.json dest=/tmp/flannel-config.json mode=0777
 
 - name: Set network overlay configuration
-  command: /usr/bin/etcdctl set coreos.com/network/config < ./flannel-config.json
-  args:
-    chdir: /tmp
+  shell: /usr/bin/etcdctl set coreos.com/network/config < /tmp/flannel-config.json
+#  command: /usr/bin/etcdctl set coreos.com/network/config < /tmp/flannel-config.json
+#  args:
+#    chdir: /tmp
 
 - name: Make sure if services (kube-apiserver, kube-controller-manager, kube-scheduler, flanneld) are running
   systemd: state=started name={{ item }} enabled=yes
