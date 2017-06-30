@@ -11,6 +11,7 @@
 - name: Install mc, vim, wget
   yum: name={{ item }} state=present
   with_items:
+    - ntp
     - mc
     - vim
     - wget
@@ -31,3 +32,7 @@
     sysctl_set: yes
     state: present
     reload: yes
+
+- name: Be sure ntpd is running and enabled
+  systemd: name=ntpd state=started enabled=yes
+  tags: ntp
