@@ -1,13 +1,13 @@
 [master]
-kube-master ansible_connection=ssh ansible_host={{ masterIp }} ansible_user=root
+kube-master ansible_connection=ssh ansible_host=192.168.0.100 ansible_user=root
 
 [nodes]
-kube-node1 ansible_connection=ssh ansible_host={{ node1Ip }} ansible_user=root
-#kube-node2 ansible_connection=ssh ansible_host={{ node2Ip }} ansible_user=root
-#kube-node3 ansible_connection=ssh ansible_host={{ node3Ip }} ansible_user=root
+kube-node1 ansible_connection=ssh ansible_host=192.168.0.101 ansible_user=root
+#kube-node2 ansible_connection=ssh ansible_host=192.168.0.102 ansible_user=root
+#kube-node3 ansible_connection=ssh ansible_host=192.168.0.103 ansible_user=root
 
 [nfs_server]
-#centos-nfs-server ansible_connection=ssh ansible_host={{ nfsIp }} ansible_user=root
+#centos-nfs-server ansible_connection=ssh ansible_host=192.168.0.104 ansible_user=root
 
 [postgreSQL]
-#centos-postgreSQL-server ansible_connection=ssh ansible_host={{ postgreIp }} ansible_user=root
+#centos-postgreSQL-server ansible_connection=ssh ansible_host=192.168.0.105 ansible_user=root
