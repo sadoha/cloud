@@ -1,0 +1,9 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+{{ masterIp }}  kube-master
+{{ node1Ip }}  kube-node1
+{{ node2Ip }}  kube-node2
+{{ node3Ip }}  kube-node3
+{{ nfsIp }}  kube-nfs-server
+{{ postgreIp }}  kube-postgreSQL-server

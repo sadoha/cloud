@@ -1,0 +1,5 @@
+---
+- name: Deploy test kubernetes infrastructure.
+  hosts: all
+  roles:
+    - common

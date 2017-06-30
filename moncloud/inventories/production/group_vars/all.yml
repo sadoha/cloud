@@ -1,0 +1,11 @@
+---
+#
+masterIp: 192.168.0.100
+node1Ip: 192.168.0.101
+node2Ip: 192.168.0.102
+node3Ip: 192.168.0.103
+nfsIp: 192.168.0.104
+postgreIp: 192.168.0.105
+
+#
+api_servers_port: 8080
