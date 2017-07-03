@@ -1,0 +1,17 @@
+---
+
+- name: Create a kubernetes namespace
+  kubernetes:
+    api_endpoint: 192.168.0.100
+    inline_data:
+      kind: Namespace
+      apiVersion: v1
+      metadata:
+        name: ansible-test
+        labels:
+          label_env: production
+          label_ver: latest
+        annotations:
+          a1: value1
+          a2: value2
+    state: present
