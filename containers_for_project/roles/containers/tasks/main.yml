@@ -1,8 +1,93 @@
 ---
 
-- name: Create a docker registry
+- name: Create a docker registry pod
   kubernetes:
-    api_endpoint: {{kube_master}}:8080
+    api_endpoint: "192.168.0.100:8080"
     insecure: yes
-    file_reference: ../templates/registry.yaml
+    inline_data:
+      apiVersion: v1
+      kind: ReplicationController
+      metadata:
+        name: registry
+        labels:
+          app: registry
+      spec:
+        replicas: 1
+        template:
+          metadata:
+            labels:
+              app: registry
+          spec:
+            volumes:
+            - name: registry-persistent-storage
+              hostPath:
+                path: "/nfsshare/registry"
+            containers:
+            - name:  registry
+              image: docker.io/registry:2
+              resources:
+                limits:
+                  cpu: 1
+                  memory: 256M
+                requests:
+                  cpu: 1
+                  memory: 256M
+              volumeMounts:
+              - name: registry-persistent-storage
+                mountPath: /var/lib/registry
+              ports:
+              - containerPort: 5000
+                name: registry
+                protocol: TCP
+    state: present
+
+- name: Create a nginx pod
+  kubernetes:
+    api_endpoint: "192.168.0.100:8080"
+    insecure: yes
+    inline_data:
+      apiVersion: v1
+      kind: ReplicationController
+      metadata:
+        name: my-nginx
+      spec:
+        replicas: 1
+        template:
+          metadata:
+            labels:
+              run: my-nginx
+          spec:
+            containers:
+            - name: my-nginx
+              image: nginx
+              resources:
+                limits:
+                  cpu: 1
+                  memory: 512M
+                requests:
+                  cpu: 1
+                  memory: 512M
+              ports:
+              - containerPort: 80
+                name: my-nginx 
+                protocol: TCP
+    state: present
+
+- name: Create a nginx service
+  kubernetes:
+    api_endpoint: "192.168.0.100:8080"
+    insecure: yes
+    inline_data:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: my-nginx
+        labels:
+          run: my-nginx
+      spec:
+        ports:
+        - port: 80
+          protocol: TCP
+        selector:
+          run: my-nginx
     state: present
