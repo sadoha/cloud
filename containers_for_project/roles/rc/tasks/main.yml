@@ -2,7 +2,7 @@
 #---------------------------------------------------------------
 - name: Create a docker registry pod
   kubernetes:
-    api_endpoint: "192.168.0.100:8080"
+    api_endpoint: "{{ ansible_host }}:8080"
     insecure: yes
     inline_data:
       apiVersion: v1
@@ -55,7 +55,7 @@
 
 - name: Create a nginx pod
   kubernetes:
-    api_endpoint: "192.168.0.100:8080"
+    api_endpoint: "{{ ansible_host }}:8080"
     insecure: yes
     inline_data:
       apiVersion: v1
