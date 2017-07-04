@@ -1,17 +1,8 @@
 ---
 
-- name: Create a kubernetes namespace
+- name: Create a docker registry
   kubernetes:
-    api_endpoint: 192.168.0.100
-    inline_data:
-      kind: Namespace
-      apiVersion: v1
-      metadata:
-        name: ansible-test
-        labels:
-          label_env: production
-          label_ver: latest
-        annotations:
-          a1: value1
-          a2: value2
+    api_endpoint: {{kube_master}}:8080
+    insecure: yes
+    file_reference: ../templates/registry.yaml
     state: present
