@@ -39,6 +39,17 @@
               - containerPort: 5000
                 name: registry
                 protocol: TCP
+            - name: registry-ui
+              image: konradkleine/docker-registry-frontend:v2
+              env:
+              - name: ENV_DOCKER_REGISTRY_HOST
+                value: "localhost"
+              - name: ENV_DOCKER_REGISTRY_PORT
+                value: "5000"
+        ports:
+        - containerPort: 80
+          name: registry
+          protocol: TCP
     state: present
 
 - name: Create a nginx pod
