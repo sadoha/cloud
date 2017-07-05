@@ -8,12 +8,14 @@
 - name: Disable SELinux
   selinux: state=disabled
 
-- name: Install mc, vim, wget
+- name: Install docker-python, mc, vim, wget, git, ntp
   yum: name={{ item }} state=present
   with_items:
+    - docker-python
     - mc
     - vim
     - wget
+    - git
     - ntp
 
 - name: Copy the hosts file
