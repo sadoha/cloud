@@ -10,7 +10,7 @@
       metadata:
         name: my-nginx
       spec:
-        replicas: 1
+        replicas: 2
         template:
           metadata:
             labels:
@@ -22,7 +22,7 @@
                 path: "/nfsshare/nginx"
             containers:
             - name: my-nginx
-              image: nginx
+              image: 192.168.0.100:5000/local-nginx
               resources:
                 limits:
                   cpu: 1

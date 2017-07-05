@@ -32,6 +32,12 @@
 - name: Make sure if a services etcd is running
   systemd: state=started name=etcd enabled=yes
 
+- name: Copy a daemon.json file for docker
+  template:
+        src=daemon.json
+        dest=/etc/docker/daemon.json
+  notify: restart docker
+
 - name: Copy docker configuration
   copy: src=docker dest=/etc/sysconfig/docker
   notify: restart docker
