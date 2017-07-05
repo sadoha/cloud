@@ -5,5 +5,5 @@
 
   roles:
     - registry
-#    - svc
-#    - rc
+    - svc
+    - rc
