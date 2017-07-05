@@ -31,4 +31,4 @@
     reload: yes
 
 - name: Make sure if a services ntp is running
-  systemd: state=started name=ntp enabled=yes
+  systemd: state=started name=ntpd enabled=yes
