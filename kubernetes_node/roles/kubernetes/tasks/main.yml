@@ -18,6 +18,12 @@
         dest=/etc/kubernetes/config
   notify: restart kubelet
 
+- name: Copy a daemon.json file for docker
+  template:
+        src=daemon.json
+        dest=/etc/docker/daemon.json
+  notify: restart docker
+
 - name: Copy docker configuration
   copy: src=docker dest=/etc/sysconfig/docker
   notify: restart docker

@@ -4,5 +4,6 @@
   remote_user: root
 
   roles:
-    - svc
-    - rc
+    - registry
+#    - svc
+#    - rc

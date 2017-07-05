@@ -1,0 +1,10 @@
+---
+#---------------------------------------------------------------
+- name: run container
+  docker:
+    insecure_registry: true
+    image: docker.io/registry:2 
+    state: reloaded
+    pull: always
+    ports:
+      - 0.0.0.0:5000:5000/tcp
