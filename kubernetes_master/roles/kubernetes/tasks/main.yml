@@ -5,6 +5,7 @@
     - kubernetes-master
     - etcd
     - flannel
+    - kubernetes-node
 
 - name: Copy /etc/etcd/etcd.conf configuration
   copy: src=etcd.conf dest=/etc/etcd/etcd.conf
@@ -31,14 +32,19 @@
 - name: Make sure if a services etcd is running
   systemd: state=started name=etcd enabled=yes
 
+- name: Copy docker configuration
+  copy: src=docker dest=/etc/sysconfig/docker
+  notify: restart docker
+
+#####################################
+# Network name have to be changed
+# ###################################
 - name: Copy a network overlay configuration file flannel-config.json
   copy: src=flannel-config.json dest=/tmp/flannel-config.json mode=0777
 
 - name: Set network overlay configuration
   shell: /usr/bin/etcdctl set coreos.com/network/config < /tmp/flannel-config.json
-#  command: /usr/bin/etcdctl set coreos.com/network/config < /tmp/flannel-config.json
-#  args:
-#    chdir: /tmp
+#####################################
 
 - name: Make sure if services (kube-apiserver, kube-controller-manager, kube-scheduler, flanneld) are running
   systemd: state=started name={{ item }} enabled=yes
@@ -47,3 +53,18 @@
     - kube-controller-manager
     - kube-scheduler
     - flanneld
+    - kube-proxy
+    - docker
+
+#######################################################################
+# Temporary resolution for setting connection possibility with kubectl
+#######################################################################
+- name: Set default cluster
+  shell: kubectl config set-cluster default-cluster --server=http://{{ ansible_host }}:8080
+
+- name: Set default connection to kubectl
+  command: kubectl config set-context default-context --cluster=default-cluster --user=default-admin
+
+- name: Set default connection to kubectl
+  command: kubectl config use-context default-context
+#######################################################################
