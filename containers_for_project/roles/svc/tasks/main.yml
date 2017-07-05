@@ -1,25 +1,4 @@
 ---
-#---------------------------------------------------------------
-
-- name: Create a docker registry service
-  kubernetes:
-    api_endpoint: "{{ ansible_host }}:8080"
-    insecure: yes
-    inline_data:
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: registry
-        labels:
-          run: registry
-      spec:
-        ports:
-        - port: 5000
-          protocol: TCP
-        selector:
-          run: registry
-    state: present
-#---------------------------------------------------------------
 
 - name: Create a nginx service
   kubernetes:

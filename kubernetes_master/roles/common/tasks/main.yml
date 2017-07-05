@@ -15,6 +15,7 @@
     - vim
     - wget
     - git
+    - ntp
 
 - name: Copy the hosts file
   copy: src=hosts dest=/etc/hosts
@@ -29,3 +30,6 @@
     sysctl_set: yes
     state: present
     reload: yes
+
+- name: Make sure if a services ntp is running
+  systemd: state=started name=ntp enabled=yes

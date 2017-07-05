@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: my-nginx
+  name: my-nginx1
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        run: my-nginx
+        run: my-nginx1
     spec:
       containers:
-      - name: my-nginx
+      - name: my-nginx1
         image: nginx
         ports:
         - containerPort: 80
