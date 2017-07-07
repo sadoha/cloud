@@ -1,0 +1,15 @@
+---
+- name: Install the zabbix zabbix repository from a remote repo
+  yum: name=http://repo.zabbix.com/zabbix/3.2/rhel/7/x86_64/zabbix-release-3.2-1.el7.noarch.rpm state=present
+
+- name: Install the latest version of zabbix agent
+  yum: name=zabbix-agent state=latest
+
+- name: Copy a zabbix_agentd.conf file for docker
+  template:
+        src=zabbix_agentd.conf
+        dest=/etc/zabbix/zabbix_agentd.conf
+  notify: restart zabbix-agent
+
+- name: Make sure if a service zabbix-agent is running
+  systemd: state=started name=zabbix-agent enabled=yes

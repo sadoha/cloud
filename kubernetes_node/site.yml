@@ -10,3 +10,4 @@
     - common
     - kubernetes
     - nfs
+    - zabbix_agent
