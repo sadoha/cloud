@@ -5,3 +5,4 @@
     - kubernetes_master
     - nfs_master
     - haproxy_master
+    - zabbix_agent
