@@ -1,0 +1,8 @@
+---
+- name: Containers management in a cloud.
+  hosts: master
+  roles:
+    - registry
+    - registry_ui
+    - nginx_rc
+    - nginx_svc

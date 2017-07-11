@@ -1,0 +1,14 @@
+---
+#---------------------------------------------------------------
+- name: Creating registry-UI
+  docker:
+    insecure_registry: true
+    image: konradkleine/docker-registry-frontend:v2
+    restart_policy: always
+    state: reloaded
+    pull: always
+    ports:
+      - 0.0.0.0:8888:80/tcp
+    env:
+        ENV_DOCKER_REGISTRY_HOST: "{{ ansible_host }}"
+        ENV_DOCKER_REGISTRY_PORT: 5000

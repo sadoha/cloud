@@ -1,0 +1,41 @@
+---
+
+- name: Create a nginx pod
+  kubernetes:
+    api_endpoint: "{{ ansible_host }}:8080"
+    insecure: yes
+    inline_data:
+      apiVersion: v1
+      kind: ReplicationController
+      metadata:
+        name: my-nginx
+      spec:
+        replicas: 2
+        template:
+          metadata:
+            labels:
+              run: my-nginx
+          spec:
+            volumes:
+            - name: nginx-persistent-storage
+              hostPath:
+                path: "/nfsshare/nginx"
+            containers:
+            - name: my-nginx
+              image: 192.168.0.100:5000/local-nginx
+              resources:
+                limits:
+                  cpu: 1
+                  memory: 512M
+                requests:
+                  cpu: 1
+                  memory: 512M
+              volumeMounts:
+              - name: nginx-persistent-storage
+                mountPath: /usr/share/nginx/html
+              ports:
+              - containerPort: 80
+                name: my-nginx 
+                protocol: TCP
+    state: present
+#---------------------------------------------------------------
