@@ -1,0 +1,5 @@
+---
+- name: Install nfs server configuration..
+  hosts: nfs_server
+  roles:
+    - nfs_server

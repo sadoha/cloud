@@ -1,0 +1,26 @@
+---
+- name: Install nfs-utils
+  yum: name={{ item }} state=present
+  with_items:
+    - nfs-utils
+
+- name: Creates directory
+  file:
+    path: /var/nfsshare/
+    state: directory
+    mode: 0777
+
+- name: Copy /etc/exports configuration 
+  template:
+        src=exports
+        dest=/etc/exports
+  notify: restart nfs
+
+
+- name: Make sure if services are running
+  systemd: state=started name={{ item }} enabled=yes
+  with_items:
+    - rpcbind
+    - nfs-server
+    - nfs-lock
+    - nfs-idmap

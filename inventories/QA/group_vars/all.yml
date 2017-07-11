@@ -1,0 +1,13 @@
+---
+#
+api_servers_port: 8080
+
+#
+master_hostname: kube-master
+master_IP: 172.16.100.13
+
+#
+server_nfs_hostname: kube-nfs-server
+
+#
+nfs_network_range: 172.16.100.0/24 

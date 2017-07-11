@@ -1,0 +1,7 @@
+---
+- name: Install kube-master configuration..
+  hosts: master
+  roles:
+    - kubernetes_master
+    - nfs_master
+    - haproxy_master
