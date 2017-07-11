@@ -3,6 +3,6 @@
   hosts: master
   roles:
     - registry
-    - registry_ui
+    #- registry_ui
     - nginx_rc
-    - nginx_svc
+    #- nginx_svc

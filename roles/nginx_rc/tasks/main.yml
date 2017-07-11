@@ -22,7 +22,7 @@
                 path: "/nfsshare/nginx"
             containers:
             - name: my-nginx
-              image: 192.168.0.100:5000/local-nginx
+              image: "{{ master_IP }}:5000/local-nginx"
               resources:
                 limits:
                   cpu: 1
