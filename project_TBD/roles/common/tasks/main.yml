@@ -3,24 +3,26 @@
   yum: name=libselinux-python state=present
 
 - name: Disable firewalld
-  service: name=firewalld state=stopped enabled=no  
+  service: name=firewalld state=stopped enabled=no 
 
 - name: Disable SELinux
-  selinux: state=disabled
+  selinux: state=disabled 
 
-- name: Install mc, vim, wget
+- name: Install docker-python, mc, vim, wget, git, ntp
   yum: name={{ item }} state=present
   with_items:
-    - ntp
+    - docker-python
+    - net-tools
     - mc
     - vim
     - wget
+    - git
+    - ntp
     - telnet
+    - mtr
 
 - name: Copy the hosts file
-  template:
-        src=hosts
-        dest=/etc/hosts
+  copy: src=hosts dest=/etc/hosts
 
 - name: Ensure hostname set
   hostname: name={{ inventory_hostname }}
@@ -33,6 +35,5 @@
     state: present
     reload: yes
 
-- name: Be sure ntpd is running and enabled
-  systemd: name=ntpd state=started enabled=yes
-  tags: ntp
+- name: Make sure if a services ntp is running
+  systemd: state=started name=ntpd enabled=yes

@@ -1,8 +1,8 @@
 [master]
-kube-master ansible_connection=ssh ansible_host=192.168.0.100 ansible_user=root
+kube-master ansible_connection=ssh ansible_host=172.16.100.13 ansible_user=root
 
 [nodes]
-kube-node1 ansible_connection=ssh ansible_host=192.168.0.101 ansible_user=root
+#kube-node1 ansible_connection=ssh ansible_host=192.168.0.101 ansible_user=root
 #kube-node2 ansible_connection=ssh ansible_host=192.168.0.102 ansible_user=root
 #kube-node3 ansible_connection=ssh ansible_host=192.168.0.103 ansible_user=root
 
