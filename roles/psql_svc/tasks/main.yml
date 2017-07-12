@@ -13,7 +13,7 @@
           run: my-psql
       spec:
         ports:
-        - port: 80
+        - port: 5432 
           protocol: TCP
         clusterIP: 10.20.20.2
         selector:

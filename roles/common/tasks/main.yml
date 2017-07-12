@@ -22,7 +22,9 @@
     - mtr
 
 - name: Copy the hosts file
-  copy: src=hosts dest=/etc/hosts
+  template:
+        src=hosts
+        dest=/etc/hosts
 
 - name: Ensure hostname set
   hostname: name={{ inventory_hostname }}
