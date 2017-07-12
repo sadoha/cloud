@@ -1,0 +1,41 @@
+---
+
+- name: Create a psql pod
+  kubernetes:
+    api_endpoint: "{{ ansible_host }}:8080"
+    insecure: yes
+    inline_data:
+      apiVersion: v1
+      kind: ReplicationController
+      metadata:
+        name: my-psql
+      spec:
+        replicas: 1
+        template:
+          metadata:
+            labels:
+              run: my-psql
+          spec:
+            volumes:
+            - name: psql-persistent-storage
+              hostPath:
+                path: "/nfsshare/psql"
+            containers:
+            - name: my-psql
+              image: "{{ master_IP }}:5000/local-psql"
+              resources:
+                limits:
+                  cpu: 1
+                  memory: 512M
+                requests:
+                  cpu: 1
+                  memory: 512M
+              volumeMounts:
+              - name: psql-persistent-storage
+                mountPath: /var/lib/postgresql
+              ports:
+              - containerPort: 5432
+                name: my-psql 
+                protocol: TCP
+    state: present
+#---------------------------------------------------------------
