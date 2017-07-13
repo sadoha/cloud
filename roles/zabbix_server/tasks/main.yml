@@ -7,6 +7,7 @@
   with_items:
     - zabbix-server-pgsql
     - zabbix-web-pgsql
+    - postgresql
 
 - name: Copy a zabbix_server.conf file to server
   template:
@@ -31,6 +32,14 @@
         src=zabbix.conf.php
         dest=/etc/zabbix/web/zabbix.conf.php
   notify: restart zabbix-server
+
+- name: Populate PSQL database
+  shell: |
+        export PGPASSWORD={{ zb_db_password }} && 
+        zcat /usr/share/doc/zabbix-server-pgsql-*/create.sql.gz | psql \ 
+        -h {{ zb_db_server }} \
+        -U {{ zb_db_user }} \
+        -d {{ zb_db_name }}
 
 - name: Make sure if a service zabbix-agent is running
   systemd: state=started name={{ item }} enabled=yes
