@@ -2,9 +2,9 @@
 - name: Containers management in a cloud.
   hosts: master
   roles:
-    - registry
-    - registry_ui
+    #- registry
+    #- registry_ui
+    #- psql_rc
+    #- psql_svc
     - nginx_rc
     - nginx_svc
-    - psql_rc
-    - psql_svc

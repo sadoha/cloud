@@ -1,9 +1,0 @@
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-192.168.0.100  kube-master
-192.168.0.101  kube-node1
-192.168.0.102  kube-node2
-192.168.0.103  kube-node3
-192.168.0.104  kube-nfs-server
-192.168.0.105  kube-postgreSQL-server

@@ -33,13 +33,17 @@
         dest=/etc/zabbix/web/zabbix.conf.php
   notify: restart zabbix-server
 
-- name: Populate PSQL database
-  shell: |
-        export PGPASSWORD={{ zb_db_password }} && 
-        zcat /usr/share/doc/zabbix-server-pgsql-*/create.sql.gz | psql \ 
-        -h {{ zb_db_server }} \
-        -U {{ zb_db_user }} \
-        -d {{ zb_db_name }}
+##########################################################
+# - We need this service only in first PSQL configuration.
+##########################################################
+#- name: Populate PSQL database
+#  shell: |
+#        export PGPASSWORD={{ zb_db_password }} && 
+#        zcat /usr/share/doc/zabbix-server-pgsql-*/create.sql.gz | psql \ 
+#        -h {{ zb_db_server }} \
+#        -U {{ zb_db_user }} \
+#        -d {{ zb_db_name }}
+##########################################################
 
 - name: Make sure if a service zabbix-agent is running
   systemd: state=started name={{ item }} enabled=yes

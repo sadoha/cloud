@@ -2,7 +2,7 @@
 
 - name: Create a nginx service
   kubernetes:
-    api_endpoint: "{{ ansible_host }}:8080"
+    api_endpoint: "{{ ansible_host }}:{{ api_servers_port }}"
     insecure: yes
     inline_data:
       apiVersion: v1
@@ -13,9 +13,9 @@
           run: my-nginx
       spec:
         ports:
-        - port: 80
+        - port: "{{ nginx_http_port }}"
           protocol: TCP
-        clusterIP: 10.20.20.1
+        clusterIP: "{{ nginx_IP }}"
         selector:
           run: my-nginx
     state: present

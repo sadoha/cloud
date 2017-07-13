@@ -2,7 +2,7 @@
 
 - name: Create a psql pod
   kubernetes:
-    api_endpoint: "{{ ansible_host }}:8080"
+    api_endpoint: "{{ ansible_host }}:{{ api_servers_port }}"
     insecure: yes
     inline_data:
       apiVersion: v1
@@ -22,7 +22,7 @@
                 path: "/nfsshare/psql"
             containers:
             - name: my-psql
-              image: "{{ master_IP }}:5000/pgsql"
+              image: "{{ master_IP }}:{{ registry_port }}/pgsql"
               resources:
                 limits:
                   cpu: 1
@@ -34,8 +34,18 @@
               - name: psql-persistent-storage
                 mountPath: /var/lib/postgresql
               ports:
-              - containerPort: 5432
+              - containerPort: "{{ psql_db_port }}"
                 name: my-psql 
                 protocol: TCP
+              readinessProbe:
+                tcpSocket:
+                  port: "{{ psql_db_port }}"
+                initialDelaySeconds: 5
+                periodSeconds: 10
+              livenessProbe:
+                tcpSocket:
+                  port: "{{ psql_db_port }}"
+                initialDelaySeconds: 15
+                periodSeconds: 20
     state: present
 #---------------------------------------------------------------

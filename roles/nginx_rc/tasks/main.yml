@@ -2,7 +2,7 @@
 
 - name: Create a nginx pod
   kubernetes:
-    api_endpoint: "{{ ansible_host }}:8080"
+    api_endpoint: "{{ ansible_host }}:{{ api_servers_port }}"
     insecure: yes
     inline_data:
       apiVersion: v1
@@ -22,7 +22,7 @@
                 path: "/nfsshare/nginx"
             containers:
             - name: my-nginx
-              image: "{{ master_IP }}:5000/local-nginx"
+              image: "{{ master_IP }}:{{ registry_port }}/local-nginx"
               resources:
                 limits:
                   cpu: 1
@@ -34,8 +34,18 @@
               - name: nginx-persistent-storage
                 mountPath: /usr/share/nginx/html
               ports:
-              - containerPort: 80
+              - containerPort: "{{ nginx_http_port }}"
                 name: my-nginx 
                 protocol: TCP
+              readinessProbe:
+                tcpSocket:
+                  port: "{{ nginx_http_port }}"
+                initialDelaySeconds: 5
+                periodSeconds: 10
+              livenessProbe:
+                tcpSocket:
+                  port: "{{ nginx_http_port }}"
+                initialDelaySeconds: 15
+                periodSeconds: 20
     state: present
 #---------------------------------------------------------------

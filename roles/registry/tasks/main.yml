@@ -8,7 +8,7 @@
     state: reloaded
     pull: always
     ports:
-      - 0.0.0.0:5000:5000/tcp
+      - 0.0.0.0:{{ registry_port }}:{{ registry_port }}/tcp
     env:
         REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
     volumes:

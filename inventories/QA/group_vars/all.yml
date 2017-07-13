@@ -1,26 +1,35 @@
 ---
-#
-api_servers_port: 8080
+# Kubernetes infrastructure 
+api_servers_port:       8080
 
-#
-master_hostname: kube-master
-server_nfs_hostname: kube-nfs-server
+master_hostname:        kube-master
+server_nfs_hostname:    kube-nfs-server
 
-#
-master_IP: 192.168.173.126
-node1_IP: 192.168.173.128
-node2_IP: 0.0.0.0
-node3_IP: 0.0.0.0
-nfs_server_IP: 192.168.172.151
+master_IP:              192.168.173.126
+node1_IP:               192.168.173.128
+node2_IP:               0.0.0.0
+node3_IP:               0.0.0.0
 
-#
-nfs_network_range: 192.168.0.0/16
+# NFS server configuration
+nfs_server_IP:          192.168.172.151
+nfs_network_range:      192.168.0.0/16
 
 # Zabbix 
-zb_db_user:     superuser
-zb_db_password: superpassword
-zb_db_name:     zabbix
-zb_db_server:   10.20.20.2
-zb_db_port:     5432
-zb_db_type:     POSTGRESQL
+zb_db_user:             superuser
+zb_db_password:         superpassword
+zb_db_name:             zabbix
+zb_db_server:           10.20.20.2
+zb_db_port:             5432
+zb_db_type:             POSTGRESQL
 
+# Nginx
+nginx_IP:               10.20.20.1
+nginx_http_port:        80
+
+# Docker Registry
+registry_port:          5000
+ui_registry_port:       8888
+
+# PostgreSQL
+psql_db_port:           5432
+psql_db_server_IP:      10.20.20.2

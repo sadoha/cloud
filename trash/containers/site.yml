@@ -1,9 +1,0 @@
----
-- name: Creating kubernetes containers.
-  hosts: master
-  remote_user: root
-
-  roles:
-    - registry
-    - svc
-    - rc

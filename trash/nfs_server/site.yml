@@ -1,8 +1,0 @@
----
-- name: Configuration kubernetes minions.
-  hosts: nfs_server
-  remote_user: root
-
-  roles:
-    - common
-    - nfs

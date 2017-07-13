@@ -8,7 +8,7 @@
     state: reloaded
     pull: always
     ports:
-      - 0.0.0.0:8888:80/tcp
+      - 0.0.0.0:{{ ui_registry_port }}:80/tcp
     env:
         ENV_DOCKER_REGISTRY_HOST: "{{ ansible_host }}"
-        ENV_DOCKER_REGISTRY_PORT: 5000
+        ENV_DOCKER_REGISTRY_PORT: "{{ registry_port }}"
