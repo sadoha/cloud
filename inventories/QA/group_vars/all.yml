@@ -14,7 +14,8 @@ node3_IP:               0.0.0.0
 nfs_server_IP:          192.168.172.151
 nfs_network_range:      192.168.0.0/16
 
-# Zabbix 
+# Zabbix
+zb_web_port:            9999 
 zb_db_user:             superuser
 zb_db_password:         superpassword
 zb_db_name:             zabbix
@@ -31,5 +32,7 @@ registry_port:          5000
 ui_registry_port:       8888
 
 # PostgreSQL
+psql_db_user:           postgres
+psql_db_password:       supermegapassword
 psql_db_port:           5432
 psql_db_server_IP:      10.20.20.2

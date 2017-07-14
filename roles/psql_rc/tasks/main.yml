@@ -23,6 +23,9 @@
             containers:
             - name: my-psql
               image: "{{ master_IP }}:{{ registry_port }}/pgsql"
+              env:
+              - name: POSTGRES_PASSWORD
+                value: "{{ psql_db_password }}"
               resources:
                 limits:
                   cpu: 1
@@ -32,7 +35,7 @@
                   memory: 512M
               volumeMounts:
               - name: psql-persistent-storage
-                mountPath: /var/lib/postgresql
+                mountPath: "/var/lib/postgresql/data"
               ports:
               - containerPort: "{{ psql_db_port }}"
                 name: my-psql 
@@ -49,3 +52,24 @@
                 periodSeconds: 20
     state: present
 #---------------------------------------------------------------
+
+- name: Ensure database zabbix is created.
+  postgresql_db:
+    name: "{{ zb_db_name }}"
+    encoding: UTF-8
+    template: template0
+    login_host: "{{ psql_db_server_IP }}"
+    login_user: "{{ psql_db_user }}"
+    login_password: "{{ psql_db_password }}"
+    port: "{{ psql_db_port }}"
+
+- name: Ensure user for zabbix db is created.
+  postgresql_user:
+    db: "{{ zb_db_name }}"
+    name: "{{ zb_db_user }}"
+    password: "{{ zb_db_password }}"
+    login_host: "{{ psql_db_server_IP }}"
+    login_user: "{{ psql_db_user }}"
+    login_password: "{{ psql_db_password }}"
+    port: "{{ psql_db_port }}"
+
