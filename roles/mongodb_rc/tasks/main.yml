@@ -1,0 +1,54 @@
+---
+
+- name: Create a MongoDB pod
+  kubernetes:
+    api_endpoint: "{{ ansible_host }}:{{ api_servers_port }}"
+    insecure: yes
+    inline_data:
+      apiVersion: v1
+      kind: ReplicationController
+      metadata:
+        name: my-mongo
+      spec:
+        replicas: 1
+        template:
+          metadata:
+            labels:
+              run: my-mongo
+          spec:
+            volumes:
+            - name: mongo-persistent-storage
+              hostPath:
+                path: "/nfsshare/mongodb"
+            containers:
+            - name: my-mongo
+              image: "{{ master_IP }}:{{ registry_port }}/mongo"
+              env:
+              - name: POSTGRES_PASSWORD
+                value: "{{ mongo_db_password }}"
+              resources:
+                limits:
+                  cpu: 1
+                  memory: 512M
+                requests:
+                  cpu: 1
+                  memory: 512M
+              volumeMounts:
+              - name: mongo-persistent-storage
+                mountPath: "/data/db"
+              ports:
+              - containerPort: "{{ mongo_db_port }}"
+                name: my-mongo 
+                protocol: TCP
+              readinessProbe:
+                tcpSocket:
+                  port: "{{ mongo_db_port }}"
+                initialDelaySeconds: 5
+                periodSeconds: 10
+              livenessProbe:
+                tcpSocket:
+                  port: "{{ mongo_db_port }}"
+                initialDelaySeconds: 15
+                periodSeconds: 20
+    state: present
+#---------------------------------------------------------------

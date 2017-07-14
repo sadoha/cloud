@@ -1,0 +1,22 @@
+---
+
+- name: Create a mongo service
+  kubernetes:
+    api_endpoint: "{{ ansible_host }}:{{ api_servers_port }}"
+    insecure: yes
+    inline_data:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: my-mongo
+        labels:
+          run: my-mongo
+      spec:
+        ports:
+        - port: "{{ mongo_db_port }}" 
+          protocol: TCP
+        clusterIP: "{{ mongo_db_server_IP }}"
+        selector:
+          run: my-mongo
+    state: present
+#---------------------------------------------------------------

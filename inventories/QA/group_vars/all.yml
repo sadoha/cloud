@@ -36,3 +36,9 @@ psql_db_user:           postgres
 psql_db_password:       supermegapassword
 psql_db_port:           5432
 psql_db_server_IP:      10.20.20.2
+
+# MongoDB
+mongo_db_user:           mpostgres
+mongo_db_password:       msupermegapassword
+mongo_db_port:           27017
+mongo_db_server_IP:      10.20.20.3

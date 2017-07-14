@@ -8,3 +8,5 @@
     - psql_svc
     - nginx_rc
     - nginx_svc
+    - mongodb_rc
+    - mongodb_svc
