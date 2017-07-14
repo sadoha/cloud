@@ -3,3 +3,4 @@
   hosts: nfs_server
   roles:
     - nfs_server
+    - zabbix_agent
