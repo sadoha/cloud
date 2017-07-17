@@ -22,7 +22,8 @@
                 path: "/nfsshare/nginx"
             containers:
             - name: my-nginx
-              image: "{{ master_IP }}:{{ registry_port }}/local-nginx"
+              image: nginx
+              #image: "{{ master_IP }}:{{ registry_port }}/local-nginx"
               resources:
                 limits:
                   cpu: 1

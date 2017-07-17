@@ -22,7 +22,7 @@
                 path: "/nfsshare/mongodb"
             containers:
             - name: my-mongo
-              image: "{{ master_IP }}:{{ registry_port }}/mongo"
+              image: mongo
               env:
               - name: POSTGRES_PASSWORD
                 value: "{{ mongo_db_password }}"

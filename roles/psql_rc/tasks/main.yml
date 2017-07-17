@@ -22,7 +22,7 @@
                 path: "/nfsshare/psql"
             containers:
             - name: my-psql
-              image: "{{ master_IP }}:{{ registry_port }}/pgsql"
+              image: postgres  
               env:
               - name: POSTGRES_PASSWORD
                 value: "{{ psql_db_password }}"
@@ -52,6 +52,12 @@
                 periodSeconds: 20
     state: present
 #---------------------------------------------------------------
+
+- name: Make sure if a PostgreSQL is running.
+  wait_for:
+    host: "{{ psql_db_server_IP }}"
+    port: "{{ psql_db_port }}" 
+    state: started
 
 - name: Ensure database zabbix is created.
   postgresql_db:

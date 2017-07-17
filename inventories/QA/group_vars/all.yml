@@ -5,13 +5,13 @@ api_servers_port:       8080
 master_hostname:        kube-master
 server_nfs_hostname:    kube-nfs-server
 
-master_IP:              192.168.173.126
-node1_IP:               192.168.173.128
-node2_IP:               0.0.0.0
-node3_IP:               0.0.0.0
+master_IP:              192.168.173.78
+node1_IP:               192.168.173.103
+node2_IP:               192.168.172.81
+node3_IP:               192.168.172.84
 
 # NFS server configuration
-nfs_server_IP:          192.168.172.151
+nfs_server_IP:          192.168.173.98
 nfs_network_range:      192.168.0.0/16
 
 # Zabbix

@@ -86,7 +86,7 @@ frontend  main *:80
 #---------------------------------------------------------------------
 backend nginx-app
     balance     roundrobin
-    server  app1 10.20.20.1:80 check
+    server  app1 {{ nginx_IP }}:80 check
 
 #backend registry-app
 #    balance     roundrobin

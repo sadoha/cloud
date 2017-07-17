@@ -4,9 +4,9 @@
   roles:
     - registry
     - registry_ui
-    - psql_rc
     - psql_svc
-    - nginx_rc
+    - psql_rc
     - nginx_svc
-    - mongodb_rc
+    - nginx_rc
     - mongodb_svc
+    - mongodb_rc
