@@ -6,26 +6,26 @@
   with_items:
     - nfs-utils
 
-- name: Creates directory
-  file:
-    path: /var/nfsshare/
-    state: directory
-    mode: 0766
-
-- name: Copy /etc/exports configuration 
-  template:
-    src: exports
-    dest: /etc/exports
-  notify: restart nfs
-
+- name: Create mountable dir
+  file: 
+    path: /nfsshare 
+    state: directory 
+    mode: 766 
 
 - name: Make sure if services are running
   systemd: 
+    state: started 
     name: "{{ item }}" 
     enabled: yes
-    state: started 
   with_items:
     - rpcbind
     - nfs-server
     - nfs-lock
     - nfs-idmap
+
+- name: Set a mountpoint  
+  mount: 
+    name: /nfsshare 
+    src: "{{server_nfs_hostname}}:/var/nfsshare" 
+    fstype: nfs 
+    state: mounted

@@ -1,6 +1,8 @@
 ---
 - name: Install the latest version of etcd, kubernetes-master, flannel 
-  yum: name={{ item }} state=present
+  yum: 
+    namei: "{{ item }}" 
+    state: present
   with_items:
     - python-psycopg2
     - kubernetes-master
@@ -9,52 +11,61 @@
     - kubernetes-node
 
 - name: Copy /etc/etcd/etcd.conf configuration
-  copy: src=etcd.conf dest=/etc/etcd/etcd.conf
+  copy: 
+    src: etcd.conf 
+    dest: /etc/etcd/etcd.conf
   notify: restart etcd
 
 - name: Copy /etc/kubernetes/config configuration
   template:
-        src=config
-        dest=/etc/kubernetes/config
+    src: config
+    dest: /etc/kubernetes/config
   notify: restart kube-controller-manager
 
 - name: Copy /etc/kubernetes/apiserver configuration
   template:
-        src=apiserver
-        dest=/etc/kubernetes/apiserver
+    src: apiserver
+    dest: /etc/kubernetes/apiserver
   notify: restart kube-apiserver
 
 - name: Copy /etc/sysconfig/flanneld configuration
   template:
-        src=flanneld
-        dest=/etc/sysconfig/flanneld
+    src: flanneld
+    dest: /etc/sysconfig/flanneld
   notify: restart flanneld
 
 - name: Make sure if a services etcd is running
-  systemd: state=started name=etcd enabled=yes
+  systemd: 
+    state: started 
+    name: etcd 
+    enabled: yes
 
 - name: Copy a daemon.json file for docker
   template:
-        src=daemon.json
-        dest=/etc/docker/daemon.json
+    src: daemon.json
+    dest: /etc/docker/daemon.json
   notify: restart docker
 
 - name: Copy docker configuration
-  copy: src=docker dest=/etc/sysconfig/docker
+  copy: 
+    src: docker 
+    dest: /etc/sysconfig/docker
   notify: restart docker
 
-#####################################
-# Network name have to be changed
-# ###################################
 - name: Copy a network overlay configuration file flannel-config.json
-  copy: src=flannel-config.json dest=/tmp/flannel-config.json mode=0777
+  copy: 
+    src: flannel-config.json 
+    dest: /tmp/flannel-config.json 
+    mode: 0755
 
 - name: Set network overlay configuration
   shell: /usr/bin/etcdctl set kube/network/config < /tmp/flannel-config.json
-#####################################
 
 - name: Make sure if services (kube-apiserver, kube-controller-manager, kube-scheduler, flanneld) are running
-  systemd: state=started name={{ item }} enabled=yes
+  systemd: 
+    state: started 
+    name: "{{ item }}" 
+    enabled: yes
   with_items:
     - kube-apiserver
     - kube-controller-manager
@@ -63,9 +74,9 @@
     - kube-proxy
     - docker
 
-#######################################################################
-# Temporary resolution for setting connection possibility with kubectl
-#######################################################################
+###################################################################
+# Temporary solution for setting connection possibility to kubectl.
+###################################################################
 - name: Set default cluster
   shell: kubectl config set-cluster default-cluster --server=http://{{ ansible_host }}:8080
 

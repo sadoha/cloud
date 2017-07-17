@@ -1,13 +1,18 @@
 ---
 - name: Install the latest version of proxy. 
-  yum: name=haproxy state=present
+  yum: 
+    name: haproxy 
+    state: present
 
 - name: Copy /etc/haproxy/haproxy.cfg configuration
   template:
-        src=haproxy.cfg
-        dest=/etc/haproxy/haproxy.cfg
+    src: haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
   notify: restart haproxy 
 
 - name: Make sure if the services haproxy is running
-  systemd: state=started name=haproxy enabled=yes
+  systemd: 
+    state: started 
+    name: haproxy 
+    enabled: yes
 

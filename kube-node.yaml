@@ -3,5 +3,5 @@
   hosts: nodes
   roles:
     - kubernetes_node
-    - nfs_node
+    - kubernetes_node_nfs
     - zabbix_agent
