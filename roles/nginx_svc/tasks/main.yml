@@ -18,5 +18,26 @@
         clusterIP: "{{ nginx_IP }}"
         selector:
           run: my-nginx
+    state: absent 
+#---------------------------------------------------------------
+
+- name: Create a nginx service
+  kubernetes:
+    api_endpoint: "{{ ansible_host }}:{{ api_servers_port }}"
+    insecure: yes
+    inline_data:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: my-nginx
+        labels:
+          run: my-nginx
+      spec:
+        ports:
+        - port: "{{ nginx_http_port }}"
+          protocol: TCP
+        clusterIP: "{{ nginx_IP }}"
+        selector:
+          run: my-nginx
     state: present
 #---------------------------------------------------------------

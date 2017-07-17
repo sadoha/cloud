@@ -48,5 +48,5 @@
                   port: "{{ nginx_http_port }}"
                 initialDelaySeconds: 15
                 periodSeconds: 20
-    state: present
+    state: present 
 #---------------------------------------------------------------

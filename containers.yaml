@@ -3,7 +3,8 @@
   hosts: master
   roles:
     - registry
-    - registry_ui
+    - registry_UI_rc
+    - registry_UI_svc
     - psql_svc
     - psql_rc
     - nginx_svc

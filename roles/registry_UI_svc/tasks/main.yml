@@ -1,6 +1,6 @@
 ---
 
-- name: Create a mongo service
+- name: Create a registry-ui service
   kubernetes:
     api_endpoint: "{{ ansible_host }}:{{ api_servers_port }}"
     insecure: yes
@@ -8,20 +8,20 @@
       apiVersion: v1
       kind: Service
       metadata:
-        name: my-mongo
+        name: my-registry-ui
         labels:
-          run: my-mongo
+          run: my-registry-ui
       spec:
         ports:
-        - port: "{{ mongo_db_port }}"
+        - port: "{{ ui_registry_port_def }}"
           protocol: TCP
-        clusterIP: "{{ mongo_db_server_IP }}"
+        clusterIP: "{{ ui_registry_port_ip }}"
         selector:
-          run: my-mongo
+          run: my-registry-ui
     state: absent 
 #---------------------------------------------------------------
 
-- name: Create a mongo service
+- name: Create a registry-ui service
   kubernetes:
     api_endpoint: "{{ ansible_host }}:{{ api_servers_port }}"
     insecure: yes
@@ -29,15 +29,15 @@
       apiVersion: v1
       kind: Service
       metadata:
-        name: my-mongo
+        name: my-registry-ui
         labels:
-          run: my-mongo
+          run: my-registry-ui
       spec:
         ports:
-        - port: "{{ mongo_db_port }}" 
+        - port: "{{ ui_registry_port_def }}" 
           protocol: TCP
-        clusterIP: "{{ mongo_db_server_IP }}"
+        clusterIP: "{{ ui_registry_port_ip }}"
         selector:
-          run: my-mongo
+          run: my-registry-ui
     state: present
 #---------------------------------------------------------------

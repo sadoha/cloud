@@ -69,11 +69,11 @@ defaults
 #    default_backend             app
 
 # - nginx
-frontend  main *:80
+frontend  main *:{{ nginx_http_port }}
     default_backend             nginx-app
 # - registry 
-#frontend  main 192.168.172.126:8080
-#    default_backend             registry-app
+frontend  main *:{{ ui_registry_port_web }}
+    default_backend             registry-app
 #---------------------------------------------------------------------
 # static backend for serving up images, stylesheets and such
 #---------------------------------------------------------------------
@@ -86,9 +86,9 @@ frontend  main *:80
 #---------------------------------------------------------------------
 backend nginx-app
     balance     roundrobin
-    server  app1 {{ nginx_IP }}:80 check
+    server  app1 {{ nginx_IP }}:{{ nginx_http_port }} check
 
-#backend registry-app
-#    balance     roundrobin
-#    server  app1 10.20.20.2:80 check
+backend registry-app
+    balance     roundrobin
+    server  app1 {{ ui_registry_port_ip }}:{{ ui_registry_port_def }} check
 
