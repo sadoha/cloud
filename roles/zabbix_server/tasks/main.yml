@@ -15,25 +15,25 @@
 
 - name: Copy a zabbix_server.conf file to server
   template:
-    src: zabbix_server.conf
+    src: zabbix_server.conf.j2
     dest: /etc/zabbix/zabbix_server.conf
   notify: restart zabbix-server
 
 - name: Copy a httpd.conf file to server
   template:
-    src: httpd.conf
+    src: httpd.conf.j2
     dest: /etc/httpd/conf/httpd.conf
   notify: restart httpd 
 
 - name: Copy a zabbix.conf file to server
   template:
-    src: zabbix.conf
+    src: zabbix.conf.j2
     dest: /etc/httpd/conf.d/zabbix.conf
   notify: restart httpd
 
 - name: Copy a zabbix.conf.php file to server
   template:
-    src: zabbix.conf.php
+    src: zabbix.conf.php.j2
     dest: /etc/zabbix/web/zabbix.conf.php
   notify: restart zabbix-server
 

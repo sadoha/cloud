@@ -14,7 +14,7 @@
 
 - name: Copy /etc/exports configuration 
   template:
-    src: exports
+    src: exports.j2
     dest: /etc/exports
   notify: restart nfs
 

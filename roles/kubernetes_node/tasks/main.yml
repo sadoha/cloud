@@ -10,25 +10,25 @@
 
 - name: Copy kubelet configuration
   template: 
-    src: kubelet
+    src: kubelet.j2
     dest: /etc/kubernetes/kubelet
   notify: restart kubelet
 
 - name: Copy a kubelet config file configuration
   template: 
-    src: config
+    src: config.j2
     dest: /etc/kubernetes/config
   notify: restart kubelet
 
 - name: Copy a daemon.json file for docker
   template:
-    src: daemon.json
+    src: daemon.json.j2
     dest: /etc/docker/daemon.json
   notify: restart docker
 
 - name: Copy flanneld configuration
   template:
-    src: flanneld
+    src: flanneld.j2
     dest: /etc/sysconfig/flanneld
   notify: restart flanneld
 

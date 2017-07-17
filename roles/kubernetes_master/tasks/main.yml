@@ -18,19 +18,19 @@
 
 - name: Copy /etc/kubernetes/config configuration
   template:
-    src: config
+    src: config.j2
     dest: /etc/kubernetes/config
   notify: restart kube-controller-manager
 
 - name: Copy /etc/kubernetes/apiserver configuration
   template:
-    src: apiserver
+    src: apiserver.j2
     dest: /etc/kubernetes/apiserver
   notify: restart kube-apiserver
 
 - name: Copy /etc/sysconfig/flanneld configuration
   template:
-    src: flanneld
+    src: flanneld.j2
     dest: /etc/sysconfig/flanneld
   notify: restart flanneld
 
@@ -42,7 +42,7 @@
 
 - name: Copy a daemon.json file for docker
   template:
-    src: daemon.json
+    src: daemon.json.j2
     dest: /etc/docker/daemon.json
   notify: restart docker
 

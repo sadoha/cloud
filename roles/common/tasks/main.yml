@@ -32,7 +32,7 @@
 
 - name: Copy the hosts file
   template:
-    src: hosts
+    src: hosts.j2
     dest: /etc/hosts
 
 - name: Ensure hostname set

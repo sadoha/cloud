@@ -11,7 +11,7 @@
 
 - name: Copy a zabbix_agentd.conf file for docker
   template:
-    src: zabbix_agentd.conf
+    src: zabbix_agentd.conf.j2
     dest: /etc/zabbix/zabbix_agentd.conf
   notify: restart zabbix-agent
 

@@ -1,14 +1,22 @@
 ---
 - name: Install nfs-utils
-  yum: name={{ item }} state=present
+  yum: 
+    name: "{{ item }}" 
+    state: present
   with_items:
     - nfs-utils
 
 - name: Create mountable dir
-  file: path=/nfsshare state=directory mode=777 
+  file: 
+    path: /nfsshare 
+    state: directory 
+    mode: 766 
 
 - name: Make sure if services are running
-  systemd: state=started name={{ item }} enabled=yes
+  systemd: 
+    state: started 
+    name: "{{ item }}" 
+    enabled: yes
   with_items:
     - rpcbind
     - nfs-server
@@ -16,4 +24,8 @@
     - nfs-idmap
 
 - name: Set a mountpoint  
-  mount: name=/nfsshare src=kube-nfs-server:/var/nfsshare fstype=nfs state=mounted
+  mount: 
+    name: /nfsshare 
+    src: kube-nfs-server:/var/nfsshare 
+    fstype: nfs 
+    state: mounted
