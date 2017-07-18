@@ -1,10 +1,10 @@
 [master]
-kube-master ansible_connection=ssh ansible_host=192.168.173.126 ansible_user=root
+kube-master ansible_connection=ssh ansible_host=192.168.173.70 ansible_user=root
 
 [nodes]
-kube-node1 ansible_connection=ssh ansible_host=192.168.173.128 ansible_user=root
-#kube-node2 ansible_connection=ssh ansible_host=172.16.100.15 ansible_user=root
-#kube-node3 ansible_connection=ssh ansible_host=172.16.100.16 ansible_user=root
+kube-node1 ansible_connection=ssh ansible_host=192.168.172.104 ansible_user=root
+kube-node2 ansible_connection=ssh ansible_host=192.168.172.105 ansible_user=root
+kube-node3 ansible_connection=ssh ansible_host=192.168.173.75 ansible_user=root
 
 [nfs_server]
-centos-nfs-server ansible_connection=ssh ansible_host=192.168.172.151 ansible_user=root
+centos-nfs-server ansible_connection=ssh ansible_host=192.168.173.65 ansible_user=root

@@ -1,0 +1,38 @@
+---
+
+- name: Create a registry-ui pod
+  kubernetes:
+    api_endpoint: "{{ ansible_host }}:{{ api_servers_port }}"
+    insecure: yes
+    inline_data:
+      apiVersion: v1
+      kind: ReplicationController
+      metadata:
+        name: my-registry-ui
+      spec:
+        replicas: 1
+        template:
+          metadata:
+            labels:
+              run: my-registry-ui
+          spec:
+            containers:
+            - name: my-registry-ui
+              image: parabuzzle/docker-registry-ui:latest
+              env:
+              - name: REGISTRY_HOST
+                value: "{{ ansible_host }}"
+              - name: REGISTRY_PORT
+                value: "{{ registry_port }}"
+              - name: REGISTRY_PROTO
+                value: "{{ ui_registry_proto }}"
+              - name: USERNAME
+                value: "{{ ui_registry_username }}"
+              - name: PASSWORD
+                value: "{{ ui_registry_password }}"
+              ports:
+              - containerPort: "{{ ui_registry_port_def }}"
+                name: my-registry-ui 
+                protocol: TCP
+    state: present
+#---------------------------------------------------------------

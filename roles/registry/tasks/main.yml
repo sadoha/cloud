@@ -4,8 +4,8 @@
   docker:
     insecure_registry: true
     image: docker.io/registry:2
-    restart_policy: always
-    state: reloaded
+    restart_policy: always 
+    state: restarted
     pull: always
     ports:
       - 0.0.0.0:{{ registry_port }}:{{ registry_port }}/tcp
