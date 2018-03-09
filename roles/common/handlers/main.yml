@@ -1,0 +1,12 @@
+---
+
+- name: restart ntp
+  systemd: 
+    state: restarted 
+    name: ntpd
+
+- name: restart sshd
+  systemd: 
+    state: restarted 
+    name: sshd
+

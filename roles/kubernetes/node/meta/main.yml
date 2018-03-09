@@ -1,0 +1,7 @@
+---
+
+# Dependencies for the tool installation and configuration.
+dependencies:
+  - { role: common }
+  - { role: docker }
+  - { role: kubernetes/common , pkgs: [ "kubelet", "kubernetes-cni", "kubeadm" ] }

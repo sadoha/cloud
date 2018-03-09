@@ -1,0 +1,20 @@
+---
+
+- name: Install an ntp package.
+  yum:
+    name: ntp
+    state: present
+  tags: install
+
+- name: Make sure if a services ntp is running.
+  systemd:
+    state: started
+    name: ntpd
+    enabled: yes
+  tags: install
+
+- name: Set timezone to UTC.
+  timezone:
+    name: UTC
+  notify: restart ntp
+  tags: configure
