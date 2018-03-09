@@ -3,6 +3,7 @@
 - name: Reset Kubernetes component.
   shell: "kubeadm reset"
   register: reset_cluster
+  tags: configure
 
 - name: Restart docker engine.
   when: reset_cluster|succeeded
@@ -22,12 +23,14 @@
                  --apiserver-advertise-address {{ kube_master_ip }} \
                  --token {{ kube_token }} 
   register: init_cluster
+  tags: configure
 
 - name: Create Kubernetes config directory
   when: init_cluster|succeeded
   file: 
     path: /root/.kube/ 
     state: directory
+  tags: configure
 
 - name: Copy admin.conf to Home directory
   when: init_cluster|succeeded
@@ -38,6 +41,7 @@
     group: root
     mode: 0755
     remote_src: True
+  tags: configure
 
 - name: Enable and restart kubelet engine
   when: init_cluster|succeeded
@@ -47,8 +51,10 @@
     state: restarted
     enabled: yes
   register: started_kubelet
+  tags: configure
 
 - name: Setup the flannel configuration.
   when: started_kubelet|succeeded
   shell: |
     kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
+  tags: configure
