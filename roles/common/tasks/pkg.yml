@@ -13,6 +13,7 @@
   with_items:
     - libselinux-python
     - docker-python
+    - python-yaml
     - net-tools
     - mc
     - vim
