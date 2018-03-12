@@ -24,7 +24,10 @@ You can use a dashboard used this URL:
 
 		https://kube_master_ip/
 
-		Kubernetes dashboard authentication by token: 6e8d50.820b14fae8b5a93d
+For taking the authorization token please run this command on the kube-master server:
+
+		kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep kubernetes-dashboard-token | awk '{print $1}')
+
 
 
 

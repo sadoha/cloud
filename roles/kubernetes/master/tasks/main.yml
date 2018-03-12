@@ -71,30 +71,8 @@
   register: started_kubelet
   tags: configure
 
-- name: Copy the flannel configuration file.
-  when: started_kubelet|succeeded
-  template:
-    src: kube-flannel.yml.j2
-    dest: /etc/kubernetes/kube-flannel.yml
-  register: copied_flannel
-  tags: configure
+- name: Include FLANNEL configuration.
+  include_tasks: flannel.yml
 
-- name: Copy the kubernetes-dashboard configuration file.
-  when: started_kubelet|succeeded
-  template:
-    src: kubernetes-dashboard.yaml.j2
-    dest: /etc/kubernetes/kubernetes-dashboard.yaml
-  register: copied_dashboard
-  tags: configure
-
-- name: Setup the flannel configuration.
-  when: copied_flannel|succeeded
-  shell: |
-    kubectl apply -f /etc/kubernetes/kube-flannel.yml 
-  tags: configure
-
-- name: Setup the kubernetes-dashboard configuration.
-  when: copied_dashboard|succeeded
-  shell: |
-    kubectl apply -f /etc/kubernetes/kubernetes-dashboard.yaml
-  tags: configure
+- name: Include DASHBOARD configuration.
+  include_tasks: dashboard.yml
