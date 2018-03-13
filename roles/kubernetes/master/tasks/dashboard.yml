@@ -26,4 +26,5 @@
   when: service_account_dashboard|succeeded
   shell: |
     kubectl apply -f /etc/kubernetes/dashboard-service-account.yaml
+  ignore_errors: yes
   tags: configure
