@@ -1,8 +1,0 @@
----
-
-- name: Install kubernetes node node.
-  hosts: master
-  gather_facts: true
-  sudo: yes
-  roles:
-    - test
