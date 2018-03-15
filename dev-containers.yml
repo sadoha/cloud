@@ -1,0 +1,11 @@
+---
+
+- name: Install the Nginx container to cloud.
+  hosts: master
+  gather_facts: true
+  sudo: yes
+  roles:
+    - nginx
+  tags: 
+    - nginx
+
