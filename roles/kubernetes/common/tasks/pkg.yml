@@ -1,0 +1,27 @@
+---
+
+- name: Add Kubernetes yum repository.
+  yum_repository:
+    name: Kubernetes
+    description: Kubernetes Repository
+    file: kubernetes
+    baseurl: http://yum.kubernetes.io/repos/kubernetes-el7-x86_64
+    enabled: yes
+    gpgcheck: no
+  tags: install
+
+- name: Install kubernetes packages (RHEL/CentOS).
+  yum:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items: "{{ pkgs }}" 
+  tags: install
+
+- name: Make sure if the service is running.
+  systemd:
+    state: started
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - kubelet
+  tags: install

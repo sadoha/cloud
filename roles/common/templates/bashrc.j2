@@ -1,0 +1,17 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+export EDITOR=vim
+alias less='less -XFRM'
+# light green
+{% if env_name == "dev" -%}
+export PS1='[\u@\h \w \[\033[32;1m\]{{ project_name | upper }}-{{ env_name | upper }}\[\033[0m\]]\$ '
+{% endif -%}

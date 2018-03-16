@@ -1,0 +1,16 @@
+---
+
+- name: Check if the rc.conf exists.
+  stat:
+    path: /etc/kubernetes/rc/nginx-rc.yml
+  register: rc_file_exists
+
+- name: Execute pods scaling --> 0.
+  when: rc_file_exists|succeeded
+  shell: kubectl scale --replicas=0 -f /etc/kubernetes/rc/nginx-rc.yml 
+  register: rc_scale
+
+- name: Execute pods scaling --> {{ nginx_container_replicas }}.
+  when: rc_scale|succeeded
+  shell: kubectl scale --replicas={{ nginx_container_replicas }} -f /etc/kubernetes/rc/nginx-rc.yml
+   

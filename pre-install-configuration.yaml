@@ -1,5 +1,0 @@
----
-- name: Preparing an infrastructure to setup cloud configuration.
-  hosts: all
-  roles:
-    - common

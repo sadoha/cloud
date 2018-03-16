@@ -1,0 +1,31 @@
+---
+
+- name: Add Docker yum repository
+  yum_repository:
+    name: Docker
+    description: Docker Repository
+    file: docker
+    baseurl: https://yum.dockerproject.org/repo/main/centos/7/
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://yum.dockerproject.org/gpg
+  tags:
+    - docker 
+    - install
+
+- name: Install docker engine (RHEL/CentOS)
+  yum:
+    name: "docker-engine-{{ docker_version }}.*"
+    state: present
+  tags:
+    - docker 
+    - install
+
+- name: Make sure if the service is running.
+  systemd:
+    state: started
+    name: docker
+    enabled: yes
+  tags:
+    - docker 
+    - install

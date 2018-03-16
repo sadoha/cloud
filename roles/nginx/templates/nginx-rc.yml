@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx
+spec:
+  replicas: {{ nginx_container_replicas }}
+  selector:
+    k8s-app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        k8s-app: nginx
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: k8s-app
+                operator: In
+                values:
+                - nginx
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: nginx
+        image: nginx:{{ docker_container_version }}
+        ports:
+        - containerPort: {{ nginx_container_web_port }}
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: {{ nginx_container_web_port }}
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          failureThreshold: 10
+          periodSeconds: 30
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: {{ nginx_container_web_port }}
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          failureThreshold: 10
+          periodSeconds: 30 
+

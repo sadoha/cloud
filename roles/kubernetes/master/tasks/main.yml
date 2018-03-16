@@ -1,0 +1,96 @@
+--- 
+
+- name: Reset Kubernetes component.
+  shell: "kubeadm reset"
+  register: reset_cluster
+  tags: 
+    - master
+    - configure
+
+- name: Restart docker engine.
+  when: reset_cluster|succeeded
+  systemd:
+    name: docker
+    daemon_reload: yes
+    state: restarted
+    enabled: yes
+  register: started_docker
+
+- name: Init Kubernetes cluster
+  when: started_docker|succeeded
+  shell: |
+    kubeadm init --service-cidr {{ kube_services_network_cidr }} \
+                 --kubernetes-version {{ kube_version }} \
+                 --pod-network-cidr {{ kube_pods_network_cidr }} \
+                 --apiserver-advertise-address {{ kube_master_ip }} \
+                 --token {{ kube_token }} 
+  register: init_cluster
+  tags:
+    - master 
+    - configure
+
+- name: Create Kubernetes config directory /root/.kube
+  when: init_cluster|succeeded
+  file: 
+    path: /root/.kube/ 
+    state: directory
+  tags: 
+    - master
+    - configure
+
+- name: Copy admin.conf to root directory
+  when: init_cluster|succeeded
+  copy:
+    src: "{{ kube_admin_config }}"
+    dest: "/root/.kube/config"
+    owner: root
+    group: root
+    mode: 0755
+    remote_src: True
+  tags:
+    - master 
+    - configure
+
+- name: Create Kubernetes config directory /home/{{ env_sudo_user }}/.kube
+  when: init_cluster|succeeded
+  file:
+    path: /home/{{ env_sudo_user }}/.kube/
+    state: directory
+  tags: 
+    - master
+    - configure
+
+- name: Copy admin.conf to {{ env_sudo_user }} directory
+  when: init_cluster|succeeded
+  copy:
+    src: "{{ kube_admin_config }}"
+    dest: "/home/{{ env_sudo_user }}/.kube/config"
+    owner: "{{ env_sudo_user }}"
+    group: "{{ env_sudo_user }}"
+    mode: 0755
+    remote_src: True
+  tags:
+    - master 
+    - configure
+
+- name: Enable and restart kubelet engine
+  when: init_cluster|succeeded
+  systemd:
+    name: kubelet
+    daemon_reload: yes
+    state: restarted
+    enabled: yes
+  register: started_kubelet
+  tags:
+    - master 
+    - configure
+
+- name: Include FLANNEL configuration.
+  include_tasks: flannel.yml
+  tags:
+    - flannel 
+
+- name: Include DASHBOARD configuration.
+  include_tasks: dashboard.yml
+  tags:
+    - dashboard 

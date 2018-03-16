@@ -1,0 +1,43 @@
+---
+
+- name: Install Docker packages.
+  include_tasks: pkg.yml
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version > '6'
+
+- name: Copy a daemon.json file for docker.
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  notify: restart docker
+  tags:
+    - docker 
+    - configure
+
+- name: Copy docker configuration.
+  template:
+    src: docker.j2
+    dest: /etc/sysconfig/docker
+  notify: restart docker
+  tags:
+    - docker 
+    - configure
+
+- name: Change the Docker running parameter.
+  lineinfile:
+    path: /usr/lib/systemd/system/docker.service
+    regexp: '^ExecStart='
+    line: 'ExecStart=/usr/bin/dockerd --exec-opt native.cgroupdriver=systemd'
+  notify: restart docker
+  tags:
+    - docker 
+    - configure
+
+- name: Add the user {{ env_sudo_user }} to the users groups.
+  user:
+    name: "{{ env_sudo_user }}"
+    shell: /bin/bash
+    groups: docker
+    append: yes
+  tags:
+    - docker 
+    - configure

@@ -1,7 +1,0 @@
----
-- name: Install kube-node configuration..
-  hosts: nodes
-  roles:
-    - kubernetes_node
-    - kubernetes_node_nfs
-    - zabbix_agent

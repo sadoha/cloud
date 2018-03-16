@@ -1,0 +1,6 @@
+---
+
+#The descriptions of tools.
+kubelet_version:                                '1.9.4-0'
+kubernetes_cni_version:                         '0.6.0-0'
+kubeadm_version:                                '1.9.4-0'

@@ -1,0 +1,38 @@
+---
+
+- name: Copy the kubernetes-dashboard configuration file.
+  when: started_kubelet|succeeded
+  template:
+    src: kube-dashboard.yml.j2
+    dest: /etc/kubernetes/kube-dashboard.yml
+  register: copied_dashboard
+  tags: 
+    - master
+    - configure
+
+- name: Copy the kubernetes-dashboard service account configuration file.
+  when: started_kubelet|succeeded
+  template:
+    src: kube-dashboard-service-account.yml.j2
+    dest: /etc/kubernetes/kube-dashboard-service-account.yml
+  register: service_account_dashboard
+  tags:
+    - master 
+    - configure
+
+- name: Setup the kubernetes-dashboard configuration.
+  when: copied_dashboard|succeeded
+  shell: |
+    kubectl apply -f /etc/kubernetes/kube-dashboard.yml
+  tags:
+    - master 
+    - configure
+
+- name: Setup the kubernetes-dashboard service account.
+  when: service_account_dashboard|succeeded
+  shell: |
+    kubectl apply -f /etc/kubernetes/kube-dashboard-service-account.yml
+  ignore_errors: yes
+  tags:
+    - master 
+    - configure
