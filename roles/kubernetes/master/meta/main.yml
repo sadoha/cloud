@@ -4,5 +4,5 @@
 dependencies:
   - { role: common }
   - { role: docker }
-  - { role: kubernetes/common , pkgs: [ "kubectl", "kubelet", "kubernetes-cni", "kubeadm" ] }
+  - { role: kubernetes/common , pkgs: [ "kubectl-{{ kubectl_version }}.x86_64", "kubelet-{{ kubelet_version }}.x86_64", "kubernetes-cni-{{ kubernetes_cni_version }}.x86_64", "kubeadm-{{ kubeadm_version }}.x86_64" ] }
 

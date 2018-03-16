@@ -2,17 +2,20 @@
 
 - name: Execute a replication controller configuration.
   include_tasks: rc.yml
-  tags: 
+  tags:
+    - nginx 
     - rc
 
 - name: Execute a service configuration.
   include_tasks: svc.yml
   tags:
+    - nginx 
     - svc 
 
 - name: Execute pods scaling.
   include_tasks: po.yml
   tags:
+    - nginx 
     - po 
 
 

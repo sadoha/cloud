@@ -3,7 +3,9 @@
 - name: Reset Kubernetes component.
   shell: "kubeadm reset"
   register: reset_cluster
-  tags: configure
+  tags: 
+    - master
+    - configure
 
 - name: Restart docker engine.
   when: reset_cluster|succeeded
@@ -23,14 +25,18 @@
                  --apiserver-advertise-address {{ kube_master_ip }} \
                  --token {{ kube_token }} 
   register: init_cluster
-  tags: configure
+  tags:
+    - master 
+    - configure
 
 - name: Create Kubernetes config directory /root/.kube
   when: init_cluster|succeeded
   file: 
     path: /root/.kube/ 
     state: directory
-  tags: configure
+  tags: 
+    - master
+    - configure
 
 - name: Copy admin.conf to root directory
   when: init_cluster|succeeded
@@ -41,14 +47,18 @@
     group: root
     mode: 0755
     remote_src: True
-  tags: configure
+  tags:
+    - master 
+    - configure
 
 - name: Create Kubernetes config directory /home/{{ env_sudo_user }}/.kube
   when: init_cluster|succeeded
   file:
     path: /home/{{ env_sudo_user }}/.kube/
     state: directory
-  tags: configure
+  tags: 
+    - master
+    - configure
 
 - name: Copy admin.conf to {{ env_sudo_user }} directory
   when: init_cluster|succeeded
@@ -59,7 +69,9 @@
     group: "{{ env_sudo_user }}"
     mode: 0755
     remote_src: True
-  tags: configure
+  tags:
+    - master 
+    - configure
 
 - name: Enable and restart kubelet engine
   when: init_cluster|succeeded
@@ -69,10 +81,16 @@
     state: restarted
     enabled: yes
   register: started_kubelet
-  tags: configure
+  tags:
+    - master 
+    - configure
 
 - name: Include FLANNEL configuration.
   include_tasks: flannel.yml
+  tags:
+    - flannel 
 
 - name: Include DASHBOARD configuration.
   include_tasks: dashboard.yml
+  tags:
+    - dashboard 

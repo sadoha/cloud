@@ -4,7 +4,9 @@
 - name: Reset Kubernetes component.
   shell: "kubeadm reset"
   register: reset_cluster
-  tags: configure
+  tags:
+    - node 
+    - configure
 
 - name: Restart kubelet engine
   when: reset_cluster|succeeded
@@ -13,7 +15,9 @@
     daemon_reload: yes
     state: restarted
   register: started_docker
-  tags: configure
+  tags:
+    - node 
+    - configure
 
 - name: Join to Kubernetes cluster.
   when: started_docker|succeeded
@@ -23,7 +27,9 @@
                  {{ kube_master_ip }}:6443 \
                  --discovery-token-unsafe-skip-ca-verification  
   register: join_cluster
-  tags: configure
+  tags:
+    - node 
+    - configure
 
 - name: Enable and restart kubelet engine
   when: join_cluster|succeeded
@@ -33,4 +39,6 @@
     state: restarted
     enabled: yes
   register: started_kubelet
-  tags: configure
+  tags:
+    - node 
+    - configure

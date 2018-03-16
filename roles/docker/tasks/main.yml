@@ -9,14 +9,18 @@
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
   notify: restart docker
-  tags: configure
+  tags:
+    - docker 
+    - configure
 
 - name: Copy docker configuration.
   template:
     src: docker.j2
     dest: /etc/sysconfig/docker
   notify: restart docker
-  tags: configure
+  tags:
+    - docker 
+    - configure
 
 - name: Change the Docker running parameter.
   lineinfile:
@@ -24,7 +28,9 @@
     regexp: '^ExecStart='
     line: 'ExecStart=/usr/bin/dockerd --exec-opt native.cgroupdriver=systemd'
   notify: restart docker
-  tags: configure
+  tags:
+    - docker 
+    - configure
 
 - name: Add the user {{ env_sudo_user }} to the users groups.
   user:
@@ -32,4 +38,6 @@
     shell: /bin/bash
     groups: docker
     append: yes
-  tags: configure
+  tags:
+    - docker 
+    - configure

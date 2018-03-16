@@ -6,10 +6,14 @@
     src: kube-flannel.yml.j2
     dest: /etc/kubernetes/kube-flannel.yml
   register: copied_flannel
-  tags: configure
+  tags:
+    - master 
+    - configure
 
 - name: Setup the flannel configuration.
   when: copied_flannel|succeeded
   shell: |
     kubectl apply -f /etc/kubernetes/kube-flannel.yml
-  tags: configure
+  tags:
+    - master 
+    - configure
