@@ -1,0 +1,28 @@
+---
+
+- name: Install NFS packages.
+  include_tasks: pkg.yml
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version > '6'
+
+- name: Creates the /var/nfsshare directory.
+  file:
+    path: /var/nfsshare/
+    state: directory
+    mode: 0755
+    owner: nfsnobody
+    group: nfsnobody
+  register: directory_created
+  tags:
+    - nfs 
+    - configure
+
+- name: Copy a exports config file.
+  when: directory_created|succeeded
+  template:
+    src: exports.j2
+    dest: /etc/exports
+  notify: restart nfs
+  tags:
+    - nfs 
+    - configure
+

@@ -1,0 +1,15 @@
+---
+
+- name: Execute a persistent volume configuration.
+  include_tasks: pv.yml
+  tags:
+    - persistentvolume 
+    - pv
+
+- name: Execute a persistent volume claim configuration.
+  include_tasks: pvc.yml
+  tags:
+    - persistentvolume 
+    - pvc 
+
+

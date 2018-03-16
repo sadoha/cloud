@@ -9,11 +9,29 @@
   tags: 
     - master
 
-- name: Install kubernetes node node.
+- name: Install kubernetes node.
   hosts: node
   gather_facts: true
   sudo: yes
   roles:
     - kubernetes/node
   tags:
-    - node 
+    - node
+
+- name: Install NFS to cloud.
+  hosts: master
+  gather_facts: true
+  sudo: yes
+  roles:
+    - nfs
+  tags:
+    - nfs 
+
+- name: Install the persistent volume.
+  hosts: master
+  gather_facts: true
+  sudo: yes
+  roles:
+    - persistentvolume
+  tags:
+    - persistentvolume 

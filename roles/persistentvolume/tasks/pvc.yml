@@ -1,0 +1,20 @@
+---
+
+- name: Check if a directory exists.
+  file:
+    path: /etc/kubernetes/pvc
+    state: directory
+  register: pvc_directory_checked
+
+- name: Copy a pvc template file.
+  when: pvc_directory_checked|succeeded
+  template:
+    src: pvc-nfs.yml.j2
+    dest: /etc/kubernetes/pvc/pvc-nfs.yml
+  register: pvc_file_copied
+
+- hame: Execute the pvc configuration.
+  when: pvc_file_copied|succeeded
+  shell: |
+    kubectl delete -f /etc/kubernetes/pvc/pvc-nfs.yml 
+    kubectl create -f /etc/kubernetes/pvc/pvc-nfs.yml

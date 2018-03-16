@@ -1,9 +1,9 @@
 [master]
-kube-master ansible_connection=ssh ansible_port=22 ansible_host=172.16.100.52 ansible_ssh_user=sudouser 
+kube-master ansible_connection=ssh ansible_port=22 ansible_host=192.168.171.195 ansible_ssh_user=sudouser 
 
 [node]
-kube-node1 ansible_connection=ssh ansible_port=22 ansible_host=172.16.100.53 ansible_ssh_user=sudouser
-kube-node2 ansible_connection=ssh ansible_port=22 ansible_host=172.16.100.54 ansible_ssh_user=sudouser
+kube-node1 ansible_connection=ssh ansible_port=22 ansible_host=192.168.171.252 ansible_ssh_user=sudouser
+kube-node2 ansible_connection=ssh ansible_port=22 ansible_host=192.168.171.250 ansible_ssh_user=sudouser
 
 [kube-cluster:children]
 master

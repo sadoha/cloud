@@ -1,0 +1,5 @@
+---
+
+# Dependencies for the tool installation and configuration.
+dependencies:
+  - { role: common }
