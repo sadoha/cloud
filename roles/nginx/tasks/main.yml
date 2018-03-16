@@ -1,5 +1,17 @@
 ---
 
+- name: Execute a Persistent Volume configuration.
+  include_tasks: pv.yml
+  tags:
+    - nginx 
+    - pv
+
+- name: Execute a Persistent Volume Claim configuration.
+  include_tasks: pvc.yml
+  tags:
+    - nginx 
+    - pvc
+
 - name: Execute a replication controller configuration.
   include_tasks: rc.yml
   tags:

@@ -16,5 +16,5 @@
 - hame: Execute the pvc configuration.
   when: pvc_file_copied|succeeded
   shell: |
-    kubectl delete -f /etc/kubernetes/pvc/pvc-nfs.yml 
+    kubectl delete -f /etc/kubernetes/pvc/pvc-nfs.yml
     kubectl create -f /etc/kubernetes/pvc/pvc-nfs.yml

@@ -32,7 +32,7 @@ For taking the authorization token please run this command on the kube-master se
 
 		kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep kubernetes-dashboard-token | awk '{print $1}')
 
-You have to run this command on the kube-master server for creating for creating an index.html file for Nginx. 
+You have to run this command on the kube-master creating for creating an index.html file for Nginx. 
 
 		echo "It Works" > /var/nfsshare/index.html
 

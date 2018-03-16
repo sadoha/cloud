@@ -20,5 +20,5 @@ kube_token: 				'6e8d50.820b14fae8b5a93d'
 kube_admin_config:      	        '/etc/kubernetes/admin.conf'
 
 # Nginx variables.
-nginx_container_replicas:      		'2'
+nginx_container_replicas:      		'1'
 nginx_container_web_port:      		'80'

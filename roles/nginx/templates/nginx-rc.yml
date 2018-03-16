@@ -47,10 +47,10 @@ spec:
           failureThreshold: 5
           periodSeconds: 15
         volumeMounts:
-            - name: nfs
+            - name: nfs-nginx
               mountPath: "/usr/share/nginx/html"
       volumes:
-      - name: nfs
+      - name: nfs-nginx
         persistentVolumeClaim:
-          claimName: nfs 
+          claimName: nfs-nginx 
 

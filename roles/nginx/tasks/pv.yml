@@ -17,4 +17,4 @@
   when: pv_file_copied|succeeded
   shell: |
     kubectl delete -f /etc/kubernetes/pv/pv-nfs.yml
-    kubectl create -f /etc/kubernetes/pv/pv-nfs.yml 
+    kubectl create -f /etc/kubernetes/pv/pv-nfs.yml
