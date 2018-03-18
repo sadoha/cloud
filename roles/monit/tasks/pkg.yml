@@ -1,0 +1,20 @@
+---
+
+- name: Install Monit (RHEL/CentOS)
+  yum:
+    name: monit
+    state: present
+  register: packages_installed
+  tags:
+    - monit 
+    - install
+
+- name: Make sure if a service is running.
+  when: packages_installed|succeeded
+  systemd:
+    state: started
+    name: monit
+    enabled: yes
+  tags:
+    - monit 
+    - install

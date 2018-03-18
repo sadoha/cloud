@@ -34,9 +34,17 @@ For taking the authorization token please run this command on the kube-master se
 
 You have to run this command on the kube-master creating for creating an index.html file for Nginx. 
 
-		echo "It Works" > /var/nfsshare/index.html
+		echo "It Works" > /var/nfsshare/nginx/index.html
 
 You can open a Nginx used this URL:
 
 		http://kube_node1_ip/
+
+For coming to Nginx used Haproxy you have to use this URL:
+
+		http://kube_master_ip:8080/
+
+For coming to Haproxy Statistics Report you should use this URL:
+
+		http://kube_master_ip:9000/haproxy_stats
 

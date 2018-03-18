@@ -6,10 +6,10 @@
     state: directory
   register: rc_directory_checked
 
-- name: Copy a nginx-rc template file.
+- name: Copy a rc template file.
   when: rc_directory_checked|succeeded
   template:
-    src: nginx-rc.yml
+    src: rc.yml
     dest: /etc/kubernetes/rc/nginx-rc.yml
   register: rc_file_copied
 

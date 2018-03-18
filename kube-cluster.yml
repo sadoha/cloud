@@ -25,4 +25,22 @@
   roles:
     - nfs
   tags:
-    - nfs 
+    - nfs
+
+- name: Install Monit to cloud.
+  hosts: master
+  gather_facts: true
+  sudo: yes
+  roles:
+    - monit
+  tags:
+    - monit
+
+- name: Install the Haproxy container to cloud.
+  hosts: master
+  gather_facts: true
+  sudo: yes
+  roles:
+    - haproxy
+  tags:
+    - haproxy 

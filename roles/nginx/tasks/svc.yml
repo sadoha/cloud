@@ -9,7 +9,7 @@
 - name: Copy a nginx-svc template file.
   when: svc_directory_checked|succeeded
   template:
-    src: nginx-svc.yml
+    src: svc.yml
     dest: /etc/kubernetes/svc/nginx-svc.yml
   register: svc_file_copied
 

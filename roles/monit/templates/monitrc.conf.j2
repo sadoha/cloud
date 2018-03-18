@@ -1,0 +1,31 @@
+## check an NTP application.
+check process ntpd with match ntpd
+  group process
+  start program = "/usr/bin/systemctl start ntpd.service"
+  stop program = "/usr/bin/systemctl stop ntpd.service"
+  if does not exist for 3 cycles then start
+
+{% if inventory_hostname == 'kube-master' or inventory_hostname == 'kube-node' %}
+## check an Docker application.
+check process docker with match docker
+  group process
+  start program = "/usr/bin/systemctl start docker.service"
+  stop program = "/usr/bin/systemctl stop docker.service"
+  if does not exist for 3 cycles then start
+
+## check an Kubelet application.
+check process kubelet with match kubelet
+  group process
+  start program = "/usr/bin/systemctl start kubelet.service"
+  stop program = "/usr/bin/systemctl stop kubelet.service"
+  if does not exist for 3 cycles then start
+{% endif %}
+
+{% if inventory_hostname == 'kube-master' %}
+## check an NFS application.
+check process nfs with match nfs
+  group process
+  start program = "/usr/bin/systemctl start nfs-server.service"
+  stop program = "/usr/bin/systemctl stop nfs-server.service"
+  if does not exist for 3 cycles then start
+{% endif %}

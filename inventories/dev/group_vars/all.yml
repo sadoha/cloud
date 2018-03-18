@@ -4,6 +4,7 @@
 env_name:				'dev'
 env_sudo_user:				'sudouser'
 project_name:				'abc'
+technical_support_mail:			'127.0.0.1@admin'
 
 # Docker variables.
 registry_ip:				'127.0.0.1'
@@ -11,14 +12,14 @@ registry_port:				'5000'
 
 
 # Kubernetes variables.
-kube_master_ip:				'192.168.171.195'
-kube_node1_ip:				'192.168.171.252'
-kube_node2_ip:				'192.168.171.250'
+kube_master_ip:				'172.16.100.55'
+kube_node1_ip:				'172.16.100.56'
+kube_node2_ip:				'172.16.100.57'
 kube_services_network_cidr:		'10.96.0.0/12'
 kube_pods_network_cidr: 		'10.244.0.0/16'
 kube_token: 				'6e8d50.820b14fae8b5a93d'
 kube_admin_config:      	        '/etc/kubernetes/admin.conf'
 
 # Nginx variables.
-nginx_container_replicas:      		'1'
+nginx_container_replicas:      		'2'
 nginx_container_web_port:      		'80'
