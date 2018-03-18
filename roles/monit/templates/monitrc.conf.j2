@@ -28,4 +28,11 @@ check process nfs with match nfs
   start program = "/usr/bin/systemctl start nfs-server.service"
   stop program = "/usr/bin/systemctl stop nfs-server.service"
   if does not exist for 3 cycles then start
+
+## check an Haproxy application.
+check process haproxy with match haproxy
+  group process
+  start program = "/usr/bin/systemctl start haproxy.service"
+  stop program = "/usr/bin/systemctl stop haproxy.service"
+  if does not exist for 3 cycles then start
 {% endif %}

@@ -8,12 +8,36 @@
   shell: "swapoff -a"
   tags: configure
 
-- name: Remove swapfile from /etc/fstab
+- name: Remove swapfile from /etc/fstab.
   mount:
     name: swap
     fstype: swap
     state: absent
   tags: configure
+
+- name: Set vm max map count to the sysctl file.
+  sysctl:
+    name: vm.max_map_count
+    value: 262144
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Set the bridge-nf-call-ip6tables sysctl file.
+  sysctl:
+    name: net.bridge.bridge-nf-call-ip6tables
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Set the bridge-nf-call-iptables in sysctl file.
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
 
 - name: Copy kubeadm conf to drop-in directory.
   template: 

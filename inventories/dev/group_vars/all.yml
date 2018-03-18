@@ -12,9 +12,9 @@ registry_port:				'5000'
 
 
 # Kubernetes variables.
-kube_master_ip:				'172.16.100.55'
-kube_node1_ip:				'172.16.100.56'
-kube_node2_ip:				'172.16.100.57'
+kube_master_ip:				'172.16.100.58'
+kube_node1_ip:				'172.16.100.59'
+kube_node2_ip:				'172.16.100.60'
 kube_services_network_cidr:		'10.96.0.0/12'
 kube_pods_network_cidr: 		'10.244.0.0/16'
 kube_token: 				'6e8d50.820b14fae8b5a93d'

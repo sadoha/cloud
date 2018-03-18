@@ -40,11 +40,11 @@ You can open a Nginx used this URL:
 
 		http://kube_node1_ip/
 
-For coming to Nginx used Haproxy you have to use this URL:
+For coming to the Nginx used Haproxy you have to use this URL:
 
 		http://kube_master_ip:8080/
 
-For coming to Haproxy Statistics Report you should use this URL:
+For coming to the Haproxy Statistics Report you should use this URL:
 
 		http://kube_master_ip:9000/haproxy_stats
 
