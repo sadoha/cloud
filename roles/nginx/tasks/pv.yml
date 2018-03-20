@@ -13,7 +13,7 @@
     dest: /etc/kubernetes/pv/pv-nfs.yml
   register: pv_file_copied
 
-- hame: Execute the pv configuration.
+- name: Execute the pv configuration.
   when: pv_file_copied|succeeded
   shell: |
     kubectl delete -f /etc/kubernetes/pv/pv-nfs.yml

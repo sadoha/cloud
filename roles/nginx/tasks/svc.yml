@@ -13,6 +13,6 @@
     dest: /etc/kubernetes/svc/nginx-svc.yml
   register: svc_file_copied
 
-- hame: Execute the svc configuration.  
+- name: Execute the svc configuration.  
   when: svc_file_copied|succeeded
   shell: kubectl apply -f /etc/kubernetes/svc/nginx-svc.yml

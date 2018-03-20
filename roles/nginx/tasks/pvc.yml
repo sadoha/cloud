@@ -13,7 +13,7 @@
     dest: /etc/kubernetes/pvc/pvc-nfs.yml
   register: pvc_file_copied
 
-- hame: Execute the pvc configuration.
+- name: Execute the pvc configuration.
   when: pvc_file_copied|succeeded
   shell: |
     kubectl delete -f /etc/kubernetes/pvc/pvc-nfs.yml
