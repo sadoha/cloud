@@ -15,6 +15,7 @@
     - docker-python
     - python-yaml
     - net-tools
+    - nfs-utils
     - mc
     - vim
     - wget

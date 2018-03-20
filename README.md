@@ -22,7 +22,7 @@ After updating configurations files you should run Ansible playbooks in the foll
 
 You can use this command in the kube-master server for checking an infrastructure:
 
-		kubectl get no,po,rc,svc,rs,deployment -o wide  --all-namespaces
+		kubectl get pv,pvc,no,po,rc,svc,rs,deployment -o wide  --all-namespaces
 
 You can open a dashboard used this URL:
 
@@ -32,7 +32,19 @@ For taking the authorization token please run this command on the kube-master se
 
 		kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep kubernetes-dashboard-token | awk '{print $1}')
 
+You have to run this command on the kube-master creating for creating an index.html file for Nginx. 
+
+		echo "It Works" > /var/nfsshare/nginx/index.html
+
 You can open a Nginx used this URL:
 
 		http://kube_node1_ip/
+
+For coming to the Nginx used Haproxy you have to use this URL:
+
+		http://kube_master_ip:8080/
+
+For coming to the Haproxy Statistics Report you should use this URL:
+
+		http://kube_master_ip:9000/haproxy_stats
 

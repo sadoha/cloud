@@ -1,0 +1,30 @@
+---
+
+- name: Copy the rpm package.
+  copy:
+    src: "haproxy-1.8.4-1.el7.x86_64.rpm"
+    dest: "/opt/haproxy-1.8.4-1.el7.x86_64.rpm"
+  register: packages_copied
+  tags:
+    - haproxy
+    - install
+
+- name: Install Haproxy (RHEL/CentOS)
+  when: packages_copied|succeeded
+  yum:
+    name: "/opt/haproxy-1.8.4-1.el7.x86_64.rpm"
+    state: present
+  register: packages_installed
+  tags:
+    - haproxy
+    - install
+
+- name: Make sure if the services are running.
+  when: packages_installed|succeeded
+  systemd:
+    state: started
+    name: haproxy
+    enabled: yes
+  tags:
+    - haproxy 
+    - install

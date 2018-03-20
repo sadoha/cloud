@@ -1,0 +1,7 @@
+---
+
+- name: restart monit 
+  systemd: 
+    state: restarted 
+    name: monit 
+    enabled: yes

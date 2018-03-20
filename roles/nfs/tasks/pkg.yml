@@ -1,0 +1,25 @@
+---
+
+- name: Install nfs-utils (RHEL/CentOS)
+  yum:
+    name: nfs-utils
+    state: present
+  register: packages_installed
+  tags:
+    - nfs 
+    - install
+
+- name: Make sure if the services are running.
+  when: packages_installed|succeeded
+  systemd:
+    state: started
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - rpcbind
+    - nfs-server
+    - nfs-lock
+    - nfs-idmap
+  tags:
+    - nfs 
+    - install

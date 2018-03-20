@@ -1,0 +1,20 @@
+---
+
+- name: Check if a directory exists.
+  file:
+    path: /etc/kubernetes/pv
+    state: directory
+  register: pv_directory_checked
+
+- name: Copy a pv template file.
+  when: pv_directory_checked|succeeded
+  template:
+    src: pv-nfs.yml.j2
+    dest: /etc/kubernetes/pv/pv-nfs.yml
+  register: pv_file_copied
+
+- name: Execute the pv configuration.
+  when: pv_file_copied|succeeded
+  shell: |
+    kubectl delete -f /etc/kubernetes/pv/pv-nfs.yml
+    kubectl create -f /etc/kubernetes/pv/pv-nfs.yml

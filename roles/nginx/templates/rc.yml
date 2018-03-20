@@ -35,8 +35,8 @@ spec:
             port: {{ nginx_container_web_port }}
           initialDelaySeconds: 5
           timeoutSeconds: 1
-          failureThreshold: 10
-          periodSeconds: 30
+          failureThreshold: 5
+          periodSeconds: 15
         livenessProbe:
           httpGet:
             scheme: HTTP
@@ -44,6 +44,13 @@ spec:
             port: {{ nginx_container_web_port }}
           initialDelaySeconds: 5
           timeoutSeconds: 1
-          failureThreshold: 10
-          periodSeconds: 30 
+          failureThreshold: 5
+          periodSeconds: 15
+        volumeMounts:
+            - name: nfs-nginx
+              mountPath: "/usr/share/nginx/html"
+      volumes:
+      - name: nfs-nginx
+        persistentVolumeClaim:
+          claimName: nfs-nginx 
 

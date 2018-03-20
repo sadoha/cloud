@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-nginx
+spec:
+  capacity:
+    storage: 100M
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: {{ kube_master_ip }}
+    # Exported path of your NFS server
+    path: "/var/nfsshare/nginx"

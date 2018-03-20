@@ -1,0 +1,25 @@
+---
+
+- name: Install Monit packages.
+  include_tasks: pkg.yml
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version > '6'
+
+- name: Copy a monitrc configuration.
+  template:
+    src: "monitrc.j2"
+    dest: "/etc/monitrc"
+  notify: restart monit
+  register: monitrc_config_copied 
+  tags:
+    - monit 
+    - configure
+
+- name: Copy a monitrc.conf configuration.
+  when: monitrc_config_copied|succeeded
+  template:
+    src: "monitrc.conf.j2"
+    dest: "/etc/monit.d/monitrc.conf"
+  notify: restart monit
+  tags:
+    - monit
+    - configure
